@@ -57,6 +57,8 @@ $overdue = count(array_filter($assignments, fn($a) => $a['status'] === 'overdue'
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignments - EduLearn</title>
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/Asignment.css">
 </head>
 <body>
@@ -69,9 +71,9 @@ $overdue = count(array_filter($assignments, fn($a) => $a['status'] === 'overdue'
         <ul class="sidebar-nav">
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="courses.php">Courses</a></li>
+            <li><a href="timetable.php">Timetable</a></li>
             <li class="active"><a href="assignments.php">Assignments</a></li>
             <li><a href="profile.php">Profile</a></li>
-            <li><a href="timetable.php">Timetable</a></li>
             <li><a href="../auth/logout.php">Logout</a></li>
         </ul>
     </aside>

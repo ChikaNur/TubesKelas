@@ -1,119 +1,9 @@
-/* === VARIABLES & RESET === */
-:root {
-    /* Color Palette */
-    --primary-gradient: linear-gradient(180deg, #4A6FA5 0%, #6B93C5 100%);
-    --primary-gradient-hover: linear-gradient(180deg, #3a5a8c 0%, #5a7cad 100%);
-    --sidebar-bg: linear-gradient(180deg, #4A6FA5 0%, #6B93C5 100%);
-    --card-bg: #ffffff;
-    --body-bg: #f8fafc;
-    --text-primary: #2c3e50;
-    --text-secondary: #64748b;
-    --text-light: #ffffff;
-    --border-color: #f1f5f9;
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
-    
-    /* Status Colors */
-    --success: #16a34a;
-    --warning: #d97706;
-    --danger: #dc2626;
-    --info: #4A6FA5;
-    
-    /* Spacing */
-    --sidebar-width: 250px;
-    --border-radius: 16px;
-    --card-padding: 28px;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background-color: var(--body-bg);
-    color: var(--text-primary);
-    line-height: 1.6;
-}
+/* Profile specific styles - All base styles from base.css */
 
 /* === LAYOUT STRUCTURE === */
 .container {
     display: flex;
     min-height: 100vh;
-}
-
-/* === SIDEBAR - SAMA DENGAN ASSIGNMENT === */
-.sidebar {
-    width: var(--sidebar-width);
-    background: var(--sidebar-bg);
-    color: var(--text-light);
-    padding: 20px 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.sidebar-header {
-    padding: 0 20px 25px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.sidebar-header h1 {
-    font-size: 26px;
-    color: var(--text-light);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.sidebar-nav {
-    list-style: none;
-}
-
-.sidebar-nav li {
-    padding: 14px 20px;
-    transition: all 0.3s ease;
-    margin: 5px 10px;
-    border-radius: 12px;
-}
-
-.sidebar-nav li:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    transform: translateX(5px);
-}
-
-.sidebar-nav li.active {
-    background-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.sidebar-nav li.active::before {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 60%;
-    background-color: var(--text-light);
-    border-radius: 0 4px 4px 0;
-}
-
-.sidebar-nav a {
-    color: var(--text-light);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 500;
-    font-size: 16px;
 }
 
 /* === MAIN CONTENT AREA === */
@@ -403,7 +293,7 @@ body {
     .profile-content {
         grid-template-columns: 1fr;
     }
-    
+
     .profile-sidebar {
         max-width: 400px;
         margin: 0 auto;
@@ -414,27 +304,27 @@ body {
     .container {
         flex-direction: column;
     }
-    
+
     .sidebar {
         width: 100%;
         height: auto;
         border-radius: 0 0 20px 20px;
         position: relative;
     }
-    
+
     .main-content {
         padding: 25px;
     }
-    
+
     .profile-nav {
         flex-wrap: wrap;
     }
-    
+
     .profile-tab {
         flex: 1 0 calc(50% - 10px);
         margin-bottom: 5px;
     }
-    
+
     .info-grid {
         grid-template-columns: 1fr;
     }
@@ -446,6 +336,7 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

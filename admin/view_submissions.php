@@ -50,6 +50,7 @@ $late = count(array_filter($submissions, fn($s) => $s['is_late'] == 1));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Submissions - <?= escape_html($assignment['judul']) ?></title>
+    <link rel="stylesheet" href="../assets/css/base.css">
     <link rel="stylesheet" href="../assets/css/adminindex.css">
     <style>
         .submission-header { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
@@ -81,6 +82,8 @@ $late = count(array_filter($submissions, fn($s) => $s['is_late'] == 1));
             <li><a href="users.php">Manage Users</a></li>
             <li><a href="courses.php">Manage Courses</a></li>
             <li class="active"><a href="assignments.php">Assignments</a></li>
+            <li><a href="reports.php">Reports</a></li>
+            <li><a href="settings.php">Settings</a></li>
             <li><a href="../auth/logout.php">Logout</a></li>
         </ul>
     </aside>

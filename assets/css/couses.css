@@ -12,7 +12,7 @@
     --border-color: #f1f5f9;
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
-    
+
     /* Course Colors */
     --color-web: #3498db;
     --color-database: #2ecc71;
@@ -21,12 +21,12 @@
     --color-ai: #1abc9c;
     --color-story: #34495e;
     --color-pancasila: #f39c12;
-    
+
     /* Progress Colors */
     --progress-high: #2ecc71;
     --progress-medium: #f39c12;
     --progress-low: #e74c3c;
-    
+
     /* Spacing */
     --sidebar-width: 250px;
     --border-radius: 16px;
@@ -50,78 +50,6 @@ body {
 .container {
     display: flex;
     min-height: 100vh;
-}
-
-/* === SIDEBAR - SAMA DENGAN HALAMAN LAIN === */
-.sidebar {
-    width: var(--sidebar-width);
-    background: var(--sidebar-bg);
-    color: var(--text-light);
-    padding: 20px 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.sidebar-header {
-    padding: 0 20px 25px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.sidebar-header h1 {
-    font-size: 26px;
-    color: var(--text-light);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.sidebar-nav {
-    list-style: none;
-}
-
-.sidebar-nav li {
-    padding: 14px 20px;
-    transition: all 0.3s ease;
-    margin: 5px 10px;
-    border-radius: 12px;
-}
-
-.sidebar-nav li:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    transform: translateX(5px);
-}
-
-.sidebar-nav li.active {
-    background-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.sidebar-nav li.active::before {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 60%;
-    background-color: var(--text-light);
-    border-radius: 0 4px 4px 0;
-}
-
-.sidebar-nav a {
-    color: var(--text-light);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 500;
-    font-size: 16px;
 }
 
 /* === MAIN CONTENT AREA === */
@@ -287,6 +215,56 @@ body {
     box-shadow: var(--shadow-hover);
 }
 
+/* Course Thumbnail */
+.course-thumbnail {
+    height: 140px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-thumbnail::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+}
+
+.course-thumbnail-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
 .course-header {
     height: 120px;
     position: relative;
@@ -300,7 +278,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
 }
 
 .course-header.web {
@@ -338,7 +316,7 @@ body {
     color: white;
     font-size: 24px;
     font-weight: 700;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .course-status {
@@ -455,16 +433,21 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255,255,255,0.3) 50%, 
-        transparent 100%);
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 100%);
     animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .progress-fill.high {
@@ -592,37 +575,37 @@ body {
     .container {
         flex-direction: column;
     }
-    
+
     .sidebar {
         width: 100%;
         height: auto;
         border-radius: 0 0 20px 20px;
         position: relative;
     }
-    
+
     .main-content {
         padding: 25px;
     }
-    
+
     .courses-filter {
         flex-direction: column;
         gap: 15px;
         align-items: stretch;
     }
-    
+
     .filter-controls {
         justify-content: center;
         flex-wrap: wrap;
     }
-    
+
     .search-box {
         width: 100%;
     }
-    
+
     .courses-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .course-actions {
         flex-direction: column;
     }
@@ -632,11 +615,11 @@ body {
     .semester-tabs {
         flex-direction: column;
     }
-    
+
     .semester-tab {
         width: 100%;
     }
-    
+
     .stats-grid {
         grid-template-columns: 1fr;
     }
@@ -648,6 +631,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -658,10 +642,30 @@ body {
     animation: slideIn 0.5s ease-out;
 }
 
-.course-card:nth-child(1) { animation-delay: 0.1s; }
-.course-card:nth-child(2) { animation-delay: 0.2s; }
-.course-card:nth-child(3) { animation-delay: 0.3s; }
-.course-card:nth-child(4) { animation-delay: 0.4s; }
-.course-card:nth-child(5) { animation-delay: 0.5s; }
-.course-card:nth-child(6) { animation-delay: 0.6s; }
-.course-card:nth-child(7) { animation-delay: 0.7s; }
+.course-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.course-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.course-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.course-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.course-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.course-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.course-card:nth-child(7) {
+    animation-delay: 0.7s;
+}

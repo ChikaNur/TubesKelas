@@ -96,7 +96,7 @@ $upcoming_tasks = $stmt->fetchAll();
             <li class="active"><a href="dashboard.php">Dashboard</a></li>
             <li><a href="courses.php">Courses</a></li>
             <li><a href="timetable.php">Timetable</a></li>
-            <li><a href="assignments.php">Assignment</a></li>
+            <li><a href="assignments.php">Assignments</a></li>
             <li><a href="profile.php">Profile</a></li>
             <li><a href="../auth/logout.php">Logout</a></li>
         </ul>

@@ -49,6 +49,7 @@ $stats = $statsStmt->fetch();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Users - EduLearn Admin</title>
+    <link rel="stylesheet" href="../assets/css/base.css">
     <link rel="stylesheet" href="../assets/css/adminindex.css">
     <style>
         .admin-search-filter { display: flex; gap: 15px; margin: 20px 0; }
@@ -90,6 +91,8 @@ $stats = $statsStmt->fetch();
             <li class="active"><a href="users.php">Manage Users</a></li>
             <li><a href="courses.php">Manage Courses</a></li>
             <li><a href="assignments.php">Assignments</a></li>
+            <li><a href="reports.php">Reports</a></li>
+            <li><a href="settings.php">Settings</a></li>
             <li><a href="../auth/logout.php">Logout</a></li>
         </ul>
     </aside>

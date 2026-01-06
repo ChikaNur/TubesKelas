@@ -36,18 +36,22 @@ $current_semester = 4;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - EduLearn</title>
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/profile.css">
 </head>
 <body>
 <div class="container">
     <aside class="sidebar">
-        <div class="sidebar-header"><h1>EduLearn</h1></div>
+        <div class="sidebar-header">
+            <h1>EduLearn</h1>
+        </div>
         <ul class="sidebar-nav">
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="courses.php">Courses</a></li>
             <li><a href="timetable.php">Timetable</a></li>
+            <li><a href="assignments.php">Assignments</a></li>
             <li class="active"><a href="profile.php">Profile</a></li>
-            <li><a href="assignments.php">Assignment</a></li>
             <li><a href="../auth/logout.php">Logout</a></li>
         </ul>
     </aside>

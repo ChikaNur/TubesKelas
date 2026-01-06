@@ -62,7 +62,7 @@ $total_pending = array_sum(array_column($courses, 'pending_tugas'));
             <li><a href="dashboard.php">Dashboard</a></li>
             <li class="active"><a href="courses.php">Courses</a></li>
             <li><a href="timetable.php">Timetable</a></li>
-            <li><a href="assignments.php">Assignment</a></li>
+            <li><a href="assignments.php">Assignments</a></li>
             <li><a href="profile.php">Profile</a></li>
             <li><a href="../auth/logout.php">Logout</a></li>
         </ul>
@@ -111,6 +111,15 @@ $total_pending = array_sum(array_column($courses, 'pending_tugas'));
             <?php else: ?>
                 <?php foreach ($courses as $course): ?>
                 <div class="course-card">
+                    <div class="course-thumbnail">
+                        <div class="course-thumbnail-icon">
+                            <?php 
+                            // Get first letter of course code for thumbnail
+                            $firstLetter = substr($course['kode_mk'], 0, 1);
+                            echo strtoupper($firstLetter);
+                            ?>
+                        </div>
+                    </div>
                     <div class="course-header <?= strtolower($course['kode_mk']) ?>">
                         <div class="course-code"><?= escape_html($course['kode_mk']) ?></div>
                         <div class="course-status"><?= ucfirst($course['status']) ?></div>

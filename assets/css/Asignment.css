@@ -1,107 +1,8 @@
-/* Reset dan base styling */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+/* Assignment specific styles - All base styles from base.css */
 
-body {
-    background-color: #f5f7fa;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Container utama */
 .container {
     display: flex;
     min-height: 100vh;
-}
-
-/* Sidebar styling - GRADIEN BARU seperti screenshot */
-.sidebar {
-    width: 250px;
-    background: linear-gradient(180deg, #4A6FA5 0%, #6B93C5 100%);
-    color: white;
-    padding: 20px 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.sidebar-header {
-    padding: 0 20px 25px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.sidebar-header h1 {
-    font-size: 26px;
-    color: white;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.sidebar-nav {
-    list-style: none;
-}
-
-.sidebar-nav li {
-    padding: 14px 20px;
-    transition: all 0.3s ease;
-    margin: 5px 10px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-}
-
-.sidebar-nav li:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    transform: translateX(5px);
-}
-
-.sidebar-nav li.active {
-    background-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.sidebar-nav li.active::before {
-    content: '';
-    position: absolute;
-    left: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 60%;
-    background-color: white;
-    border-radius: 0 4px 4px 0;
-}
-
-.sidebar-nav a {
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 500;
-    font-size: 16px;
-    width: 100%;
-}
-
-/* Ikon untuk menu sidebar (opsional) */
-.sidebar-nav a::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.9;
 }
 
 /* Main content area */
@@ -289,7 +190,7 @@ body {
     .container {
         flex-direction: column;
     }
-    
+
     .sidebar {
         width: 100%;
         padding: 15px;
@@ -297,28 +198,28 @@ body {
         position: relative;
         border-radius: 0 0 20px 20px;
     }
-    
+
     .sidebar-nav {
         display: flex;
         overflow-x: auto;
         padding: 10px 0;
     }
-    
+
     .sidebar-nav li {
         flex-shrink: 0;
         margin: 0 5px;
     }
-    
+
     .main-content {
         padding: 20px;
     }
-    
+
     .upload-section {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
     }
-    
+
     .assignment-title,
     .deadline,
     .upload-section {
@@ -328,18 +229,45 @@ body {
 
 /* Animasi tambahan */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .assignment-item {
     animation: fadeIn 0.5s ease-out forwards;
 }
 
-.assignment-item:nth-child(1) { animation-delay: 0.1s; }
-.assignment-item:nth-child(2) { animation-delay: 0.2s; }
-.assignment-item:nth-child(3) { animation-delay: 0.3s; }
-.assignment-item:nth-child(4) { animation-delay: 0.4s; }
-.assignment-item:nth-child(5) { animation-delay: 0.5s; }
-.assignment-item:nth-child(6) { animation-delay: 0.6s; }
-.assignment-item:nth-child(7) { animation-delay: 0.7s; }
+.assignment-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.assignment-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.assignment-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.assignment-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.assignment-item:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.assignment-item:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.assignment-item:nth-child(7) {
+    animation-delay: 0.7s;
+}

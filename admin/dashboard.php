@@ -62,7 +62,9 @@ $recent_enrollments = $stmt->fetchAll();
         </aside>
 
         <main class="main-content">
-            <div class="admin-header">
+        <?php include '../includes/messages.php'; ?>
+        
+        <div class="admin-header">
                 <div class="admin-title">
                     <h1>Dashboard</h1>
                     <p>Selamat datang, <?= escape_html(get_user_info('nama')) ?></p>

@@ -114,7 +114,9 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
         </aside>
 
         <main class="main-content">
-            <div class="admin-header">
+        <?php include '../includes/messages.php'; ?>
+        
+        <div class="admin-header">
                 <div class="admin-title">
                     <h1>Manage Courses</h1>
                     <p>Create and manage all courses in the system</p>

@@ -104,6 +104,8 @@ $upcoming_tasks = $stmt->fetchAll();
 
    <!-- Main Content -->
     <main class="main-content">
+        <?php include '../includes/messages.php'; ?>
+        
         <!-- Dashboard Header -->
         <div class="dashboard-header">
             <h1>Dashboard</h1>

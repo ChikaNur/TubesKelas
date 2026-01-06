@@ -51,7 +51,7 @@ $materials = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= escape_html($course['nama_mk']) ?> - EduLearn</title>
-    <link rel="stylesheet" href="../assets/css/couses.css">
+    <link rel="stylesheet" href="../assets/css/student-style.css">
     <style>
         .course-detail-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 20px; border-radius: 10px; margin-bottom: 30px; }
         .materials-list { background: white; border-radius: 10px; padding: 20px; }

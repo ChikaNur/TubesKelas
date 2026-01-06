@@ -54,6 +54,7 @@ $current_day = ['Sunday' => null, 'Monday' => 'Senin', 'Tuesday' => 'Selasa',
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timetable - EduLearn</title>
     <link rel="stylesheet" href="../assets/css/timetable.css">
+    <!-- <link rel="stylesheet" href="../assets/css/student-style.css"> -->
 </head>
 <body>
 <div class="container">

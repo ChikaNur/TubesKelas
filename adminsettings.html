@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - EduLearn Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Admin Sidebar -->
+        <aside class="sidebar admin-sidebar">
+            <div class="sidebar-header">
+                <h1>EduLearn</h1>
+                <p style="font-size: 12px; opacity: 0.8;">Admin Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="admin-dashboard.html">Dashboard</a></li>
+                <li><a href="admin-users.html">Manage Users</a></li>
+                <li><a href="admin-courses.html">Manage Courses</a></li>
+                <li><a href="admin-assignments.html">Assignments</a></li>
+                <li><a href="admin-reports.html">Reports</a></li>
+                <li class="active"><a href="admin-settings.html">Settings</a></li>
+                <li><a href="dashboard.html">← Back to User</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="admin-header">
+                <div class="admin-title">
+                    <h1>System Settings</h1>
+                    <p>Configure system preferences and options</p>
+                </div>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div class="profile-nav" style="max-width: 100%;">
+                <button class="profile-tab active" onclick="showTab('general')">General</button>
+                <button class="profile-tab" onclick="showTab('security')">Security</button>
+                <button class="profile-tab" onclick="showTab('notifications')">Notifications</button>
+                <button class="profile-tab" onclick="showTab('backup')">Backup</button>
+            </div>
+
+            <!-- General Settings -->
+            <div id="generalTab" class="form-section">
+                <h3>General Settings</h3>
+                <div class="admin-form-grid">
+                    <div class="form-group">
+                        <label>System Name</label>
+                        <input type="text" class="form-control" value="EduLearn" placeholder="System name">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Email</label>
+                        <input type="email" class="form-control" value="support@edulearn.ac.id">
+                    </div>
+                    <div class="form-group">
+                        <label>Timezone</label>
+                        <select class="form-control">
+                            <option>Asia/Jakarta (GMT+7)</option>
+                            <option>Asia/Singapore (GMT+8)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date Format</label>
+                        <select class="form-control">
+                            <option>DD/MM/YYYY</option>
+                            <option>MM/DD/YYYY</option>
+                            <option>YYYY-MM-DD</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 20px;">Save General Settings</button>
+            </div>
+
+            <!-- Security Settings -->
+            <div id="securityTab" class="form-section" style="display: none;">
+                <h3>Security Settings</h3>
+                <div class="admin-form-grid">
+                    <div class="form-group">
+                        <label>Password Policy</label>
+                        <select class="form-control">
+                            <option>Minimum 8 characters</option>
+                            <option>Minimum 12 characters</option>
+                            <option>Strong password required</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Login Attempts</label>
+                        <input type="number" class="form-control" value="5" min="1" max="10">
+                        <small>Max failed login attempts before lockout</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Session Timeout</label>
+                        <select class="form-control">
+                            <option>15 minutes</option>
+                            <option>30 minutes</option>
+                            <option>1 hour</option>
+                            <option>2 hours</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Two-Factor Auth</label>
+                        <div style="margin-top: 8px;">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" checked> Enable for all users
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 20px;">Save Security Settings</button>
+            </div>
+
+            <!-- Backup Settings -->
+            <div id="backupTab" class="form-section" style="display: none;">
+                <h3>Backup & Restore</h3>
+                <div class="admin-form-grid">
+                    <div class="form-group">
+                        <label>Auto Backup</label>
+                        <select class="form-control">
+                            <option>Daily</option>
+                            <option>Weekly</option>
+                            <option>Monthly</option>
+                            <option>Disabled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Backup</label>
+                        <input type="text" class="form-control" value="2024-05-28 02:00 AM" readonly>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 30px;">
+                    <button class="btn btn-primary">🔒 Create Backup Now</button>
+                    <button class="btn btn-outline">🔄 Restore from Backup</button>
+                    <button class="btn btn-outline">📥 Download Backup</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.form-section').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.profile-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').style.display = 'block';
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

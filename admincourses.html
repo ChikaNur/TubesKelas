@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Courses - EduLearn Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Admin Sidebar -->
+        <aside class="sidebar admin-sidebar">
+            <div class="sidebar-header">
+                <h1>EduLearn</h1>
+                <p style="font-size: 12px; opacity: 0.8;">Admin Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="admin-dashboard.html">Dashboard</a></li>
+                <li><a href="admin-users.html">Manage Users</a></li>
+                <li class="active"><a href="admin-courses.html">Manage Courses</a></li>
+                <li><a href="admin-assignments.html">Assignments</a></li>
+                <li><a href="admin-reports.html">Reports</a></li>
+                <li><a href="admin-settings.html">Settings</a></li>
+                <li><a href="dashboard.html">← Back to User</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="admin-header">
+                <div class="admin-title">
+                    <h1>Manage Courses</h1>
+                    <p>Create and manage all courses in the system</p>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-primary">+ Add New Course</button>
+                    <button class="btn btn-outline">📋 Bulk Import</button>
+                </div>
+            </div>
+
+            <!-- Courses Table -->
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Instructor</th>
+                            <th>Students</th>
+                            <th>Semester</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>WEB101</strong></td>
+                            <td>
+                                <strong>Pemrograman Web</strong><br>
+                                <small>Learn HTML, CSS, JavaScript</small>
+                            </td>
+                            <td>Prof. Andi Wijaya</td>
+                            <td>142</td>
+                            <td>Semester 3</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-edit">✏️</button>
+                                    <button class="btn-icon btn-view">👁️</button>
+                                    <button class="btn-icon btn-delete">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>DB202</strong></td>
+                            <td>
+                                <strong>Basis Data</strong><br>
+                                <small>Database design and SQL</small>
+                            </td>
+                            <td>Bu Rina</td>
+                            <td>128</td>
+                            <td>Semester 3</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-edit">✏️</button>
+                                    <button class="btn-icon btn-view">👁️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>UX301</strong></td>
+                            <td>
+                                <strong>UI/UX Design</strong><br>
+                                <small>User interface and experience</small>
+                            </td>
+                            <td>Pak Budi</td>
+                            <td>96</td>
+                            <td>Semester 3</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-edit">✏️</button>
+                                    <button class="btn-icon btn-view">👁️</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI401</strong></td>
+                            <td>
+                                <strong>Kecerdasan Buatan</strong><br>
+                                <small>AI and Machine Learning</small>
+                            </td>
+                            <td>Bu Maya</td>
+                            <td>87</td>
+                            <td>Semester 4</td>
+                            <td><span class="status-badge status-pending">Draft</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn-icon btn-edit">✏️</button>
+                                    <button class="btn-icon btn-view">👁️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Course Statistics -->
+            <div class="admin-charts">
+                <div class="chart-card">
+                    <h3>Course Enrollment Statistics</h3>
+                    <div class="chart-placeholder">
+                        Chart: Course Popularity
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Course Completion Rate</h3>
+                    <div class="chart-placeholder">
+                        Chart: Completion Percentage
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

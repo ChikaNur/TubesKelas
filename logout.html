@@ -1,0 +1,8 @@
+<a href="#" onclick="logout()">Logout</a>
+
+<script>
+  function logout() {
+    localStorage.removeItem("isLogin");
+    window.location.href = "login.html";
+  }
+</script>

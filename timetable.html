@@ -1,0 +1,219 @@
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>EduLearn</h1>
+            <link rel="stylesheet" href="timetable.css">
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li class="active"><a href="#">Timetable</a></li>
+            <li><a href="Asignment.html">Assignment</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Timetable Header -->
+        <div class="timetable-header">
+            <h1>Weekly Timetable</h1>
+            <p>Jadwal perkuliahan semester berjalan</p>
+        </div>
+
+        <!-- Timetable Controls -->
+        <div class="timetable-controls">
+            <div class="week-nav">
+                <button>
+                    ← Minggu Sebelumnya
+                </button>
+                <div class="current-week">Minggu Ke-12</div>
+                <button>
+                    Minggu Berikutnya →
+                </button>
+            </div>
+            <div class="semester-info">
+                <h4>Semester 4</h4>
+                <p>Genap 2024/2025</p>
+            </div>
+        </div>
+
+        <!-- Timetable Grid -->
+        <div class="timetable-container">
+            <div class="timetable-grid">
+                <!-- Header Row -->
+                <div class="timetable-header-cell">Waktu</div>
+                <div class="timetable-header-cell">Senin</div>
+                <div class="timetable-header-cell">Selasa</div>
+                <div class="timetable-header-cell current-day">Rabu</div>
+                <div class="timetable-header-cell">Kamis</div>
+                <div class="timetable-header-cell">Jumat</div>
+
+                <!-- Time Slots -->
+                <div class="time-slot">
+                    08.00
+                    <span>08:00 - 09:40</span>
+                </div>
+                <div class="class-card empty"></div>
+                <div class="class-card">
+                    <div class="class-content web">
+                        <h4>Pemrograman Web</h4>
+                        <div class="class-meta">
+                            <span>Ruang: A-301</span>
+                            <span class="class-room">Online</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="class-content database">
+                        <h4>Basis Data</h4>
+                        <div class="class-meta">
+                            <span>Ruang: Lab Komputer</span>
+                            <span class="class-room">Praktikum</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card empty"></div>
+                <div class="class-card current-class">
+                    <div class="class-content pancasila">
+                        <h4>Pancasila</h4>
+                        <div class="class-meta">
+                            <span>Ruang: B-201</span>
+                            <span class="class-room">Kelas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10:00 Slot -->
+                <div class="time-slot">
+                    10.00
+                    <span>10:00 - 11:40</span>
+                </div>
+                <div class="class-card">
+                    <div class="class-content pbo">
+                        <h4>Pemrograman Berorientasi Objek</h4>
+                        <div class="class-meta">
+                            <span>Ruang: A-302</span>
+                            <span class="class-room">Kelas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card empty"></div>
+                <div class="class-card empty"></div>
+                <div class="class-card">
+                    <div class="class-content design">
+                        <h4>UI/UX Design</h4>
+                        <div class="class-meta">
+                            <span>Ruang: Lab Design</span>
+                            <span class="class-room">Studio</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card empty"></div>
+
+                <!-- 13:00 Slot -->
+                <div class="time-slot">
+                    13.00
+                    <span>13:00 - 14:40</span>
+                </div>
+                <div class="class-card">
+                    <div class="class-content ai">
+                        <h4>Kecerdasan Buatan</h4>
+                        <div class="class-meta">
+                            <span>Ruang: Lab AI</span>
+                            <span class="class-room">Praktikum</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card empty"></div>
+                <div class="class-card empty"></div>
+                <div class="class-card">
+                    <div class="class-content story">
+                        <h4>Teknik Penceritaan Digital</h4>
+                        <div class="class-meta">
+                            <span>Ruang: Studio Media</span>
+                            <span class="class-room">Workshop</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="class-card empty"></div>
+
+                <!-- 15:00 Slot -->
+                <div class="time-slot">
+                    15.00
+                    <span>15:00 - 16:40</span>
+                </div>
+                <div class="class-card empty"></div>
+                <div class="class-card empty"></div>
+                <div class="class-card empty"></div>
+                <div class="class-card empty"></div>
+                <div class="class-card empty"></div>
+            </div>
+        </div>
+
+        <!-- Day Legend -->
+        <div class="day-legend">
+            <div class="legend-item">
+                <span class="legend-color web"></span>
+                <span>Pemrograman Web</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color database"></span>
+                <span>Basis Data</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color pbo"></span>
+                <span>PBO</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color ai"></span>
+                <span>Kecerdasan Buatan</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color pancasila"></span>
+                <span>Pancasila</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color design"></span>
+                <span>UI/UX Design</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color story"></span>
+                <span>Teknik Penceritaan</span>
+            </div>
+        </div>
+
+        <!-- Today's Schedule -->
+        <div class="today-schedule">
+            <h3>Jadwal Hari Ini (Rabu)</h3>
+            <div class="today-classes">
+                <div class="today-class pancasila">
+                    <div class="class-time">08:00 - 09:40</div>
+                    <div class="class-details">
+                        <h4>Pancasila</h4>
+                        <p>Ruang: B-201 | Dosen: Dr. Surya</p>
+                    </div>
+                    <div class="class-status">SEDANG BERLANGSUNG</div>
+                </div>
+                <div class="today-class web">
+                    <div class="class-time">10:00 - 11:40</div>
+                    <div class="class-details">
+                        <h4>Pemrograman Web</h4>
+                        <p>Ruang: A-301 | Dosen: Prof. Budi</p>
+                    </div>
+                    <div class="class-status">SELANJUTNYA</div>
+                </div>
+                <div class="today-class ai">
+                    <div class="class-time">13:00 - 14:40</div>
+                    <div class="class-details">
+                        <h4>Kecerdasan Buatan</h4>
+                        <p>Ruang: Lab AI | Dosen: Dr. Rina</p>
+                    </div>
+                    <div class="class-status">MENUNGGU</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

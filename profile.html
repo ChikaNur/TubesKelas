@@ -1,0 +1,147 @@
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>EduLearn</h1>
+            <link rel="stylesheet" href="profile.css">
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="timetable.html">Timetable</a></li>
+            <li class="active"><a href="#">Profile</a></li>
+            <li><a href="Asignment.html">Assignment</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <p>Kelola informasi akun dan akademik</p>
+        </div>
+
+        <!-- Profile Navigation -->
+        <nav class="profile-nav">
+            <button class="profile-tab active">Overview</button>
+            <button class="profile-tab">Edit Profile</button>
+            <button class="profile-tab">Academic Info</button>
+            <button class="profile-tab">Security</button>
+        </nav>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <!-- Sidebar Profile -->
+            <div class="profile-sidebar">
+                <div class="profile-avatar">
+                    BM
+                </div>
+                <div class="profile-info">
+                    <h2>Bayu Muda Herlambang</h2>
+                    <p class="email">bayu@student.ac.id</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">7</div>
+                            <div class="stat-label">Courses</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Semester</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Assignments</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Profile Content -->
+            <div class="profile-main">
+                <!-- Overview Card -->
+                <div class="profile-card">
+                    <h3>Overview</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Nama Lengkap</div>
+                            <div class="info-value">Bayu Muda Herlambang</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">bayu@student.ac.id</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Program Studi</div>
+                            <div class="info-value">Informatika</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Semester</div>
+                            <div class="info-value">4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Profile Card -->
+                <div class="profile-card">
+                    <h3>Edit Profile</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="fullName">Nama Lengkap</label>
+                            <input type="text" id="fullName" class="form-control" value="Bayu Muda Herlambang">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" value="bayu@student.ac.id">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Academic Info Card -->
+                <div class="profile-card">
+                    <h3>Academic Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">NIM</div>
+                            <div class="info-value">707082400072</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Program Studi</div>
+                            <div class="info-value">Informatika</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Semester</div>
+                            <div class="info-value">4</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Status</div>
+                            <div class="info-value">Aktif</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Card -->
+                <div class="profile-card">
+                    <h3>Security</h3>
+                    <div class="security-note">
+                        <h4>⚠️ Fitur Sedang Dikembangkan</h4>
+                        <p>Fitur keamanan akan dikembangkan pada tahap selanjutnya. Terima kasih atas pengertiannya.</p>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-outline">
+                            Ganti Password
+                        </button>
+                        <button class="btn btn-outline" style="margin-left: 10px;">
+                            Two-Factor Auth
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

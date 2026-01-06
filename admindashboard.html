@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EduLearn</title>
+    <link rel="stylesheet" href="adminindex.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Admin Sidebar -->
+        <aside class="sidebar admin-sidebar">
+            <div class="sidebar-header">
+                <h1>EduLearn</h1>
+                <p style="font-size: 12px; opacity: 0.8;">Admin Panel</p>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="active"><a href="admindashboard.html">Dashboard</a></li>
+                <li><a href="admin-users.html">Manage Users</a></li>
+                <li><a href="admin-courses.html">Manage Courses</a></li>
+                <li><a href="admin-assignments.html">Assignments</a></li>
+                <li><a href="admin-reports.html">Reports</a></li>
+                <li><a href="admin-settings.html">Settings</a></li>
+                <li><a href="dashboard.html">← Back to User</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <div class="admin-title">
+                    <h1>Admin Dashboard</h1>
+                    <p>Overview sistem EduLearn</p>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-primary">📊 Generate Report</button>
+                    <button class="btn btn-outline">🔄 Refresh Data</button>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="quick-stat">
+                    <div class="quick-stat-value">1,248</div>
+                    <div class="quick-stat-label">Sessions Today</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">87%</div>
+                    <div class="quick-stat-label">Server Uptime</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">42</div>
+                    <div class="quick-stat-label">New Users</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value">3.2s</div>
+                    <div class="quick-stat-label">Avg. Response Time</div>
+                </div>
+            </div>
+
+            <!-- Admin Stats Grid -->
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card total-users">
+                    <div class="admin-stat-icon">👥</div>
+                    <div class="admin-stat-value">1,542</div>
+                    <div class="admin-stat-label">Total Users</div>
+                </div>
+
+                <div class="admin-stat-card active-courses">
+                    <div class="admin-stat-icon">📚</div>
+                    <div class="admin-stat-value">24</div>
+                    <div class="admin-stat-label">Active Courses</div>
+                </div>
+
+                <div class="admin-stat-card pending-assignments">
+                    <div class="admin-stat-icon">📝</div>
+                    <div class="admin-stat-value">328</div>
+                    <div class="admin-stat-label">Pending Assignments</div>
+                </div>
+
+                <div class="admin-stat-card active-students">
+                    <div class="admin-stat-icon">🎓</div>
+                    <div class="admin-stat-value">1,218</div>
+                    <div class="admin-stat-label">Active Students</div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="admin-charts">
+                <div class="chart-card">
+                    <h3>User Registration Trend</h3>
+                    <div class="chart-placeholder">
+                        Chart: Monthly User Growth
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Course Enrollment</h3>
+                    <div class="chart-placeholder">
+                        Chart: Top 5 Courses by Enrollment
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="admin-table-container">
+                <h3 style="margin-bottom: 20px;">Recent System Activity</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>User</th>
+                            <th>Activity</th>
+                            <th>IP Address</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10:30 AM</td>
+                            <td>Bayu Muda</td>
+                            <td>Submitted assignment "Web Landing Page"</td>
+                            <td>192.168.1.101</td>
+                            <td><span class="status-badge status-active">Success</span></td>
+                        </tr>
+                        <tr>
+                            <td>09:45 AM</td>
+                            <td>Admin</td>
+                            <td>Added new course "Machine Learning"</td>
+                            <td>192.168.1.1</td>
+                            <td><span class="status-badge status-active">Success</span></td>
+                        </tr>
+                        <tr>
+                            <td>Yesterday</td>
+                            <td>Rina Sari</td>
+                            <td>Failed login attempt</td>
+                            <td>192.168.1.105</td>
+                            <td><span class="status-badge status-inactive">Failed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Yesterday</td>
+                            <td>Admin</td>
+                            <td>System backup completed</td>
+                            <td>192.168.1.1</td>
+                            <td><span class="status-badge status-active">Success</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

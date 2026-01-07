@@ -86,16 +86,29 @@ $user_info = get_user_info();
         <div class="admin-table-container" style="margin-bottom: 20px;">
             <h3>🔒 Security Settings</h3>
             <div style="max-width: 600px;">
-                <div style="padding: 15px; border: 1px solid #dee2e6; border-radius: 8px; margin-bottom: 15px;">
-                    <h4 style="margin-bottom: 10px;">Change Password</h4>
-                    <p style="color: #7f8c8d; margin-bottom: 15px;">Update your admin password for better security</p>
-                    <button class="btn btn-primary" onclick="alert('Password change feature coming soon!')">Change Password</button>
-                </div>
-                
-                <div style="padding: 15px; border: 1px solid #dee2e6; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px;">Two-Factor Authentication</h4>
-                    <p style="color: #7f8c8d; margin-bottom: 15px;">Add an extra layer of security to your account</p>
-                    <button class="btn btn-secondary" onclick="alert('2FA feature coming soon!')">Enable 2FA</button>
+                <div style="padding: 20px; border: 1px solid #dee2e6; border-radius: 8px;">
+                    <h4 style="margin-bottom: 15px;">Change Password</h4>
+                    <form method="POST" action="change_admin_password.php" onsubmit="return confirmPasswordChange()">
+                        <input type="hidden" name="change_password" value="1">
+                        
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="old_password" style="display: block; margin-bottom: 5px; font-weight: 600;">Password Lama</label>
+                            <input type="password" id="old_password" name="old_password" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="new_password" style="display: block; margin-bottom: 5px; font-weight: 600;">Password Baru</label>
+                            <input type="password" id="new_password" name="new_password" class="form-control" required minlength="6">
+                            <small style="color: #64748b;">Minimal 6 karakter</small>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="confirm_password" style="display: block; margin-bottom: 5px; font-weight: 600;">Konfirmasi Password Baru</label>
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">🔒 Update Password</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -129,5 +142,24 @@ $user_info = get_user_info();
         </div>
     </main>
 </div>
+
+<script>
+function confirmPasswordChange() {
+    const newPassword = document.getElementById('new_password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    
+    if (newPassword !== confirmPassword) {
+        alert('Password baru dan konfirmasi tidak cocok!');
+        return false;
+    }
+    
+    if (newPassword.length < 6) {
+        alert('Password baru minimal 6 karakter!');
+        return false;
+    }
+    
+    return confirm('Apakah Anda yakin ingin mengubah password?');
+}
+</script>
 </body>
 </html>

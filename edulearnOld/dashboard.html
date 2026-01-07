@@ -1,0 +1,326 @@
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>EduLearn</h1>
+            <link rel="stylesheet" href="dashboard.css">
+        </div>
+        <ul class="sidebar-nav">
+            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="timetable.html">Timetable</a></li>
+            <li><a href="Asignment.html">Assignment</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </aside>
+
+   <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1>Dashboard</h1>
+            <p>Ringkasan aktivitas pembelajaran</p>
+        </div>
+<div id="logoutModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Konfirmasi Logout</h3>
+            <button onclick="closeModal()" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 20px;">🔒</div>
+                <h4 style="color: #2c3e50; margin-bottom: 10px;">Yakin ingin keluar?</h4>
+                <p style="color: #64748b;">Anda akan keluar dari akun EduLearn.</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeModal()" class="btn-secondary">Batal</button>
+            <a href="index.html" class="btn-primary">Keluar</a>
+        </div>
+    </div>
+</div>
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card courses">
+                <div class="stat-icon">
+                    📚
+                </div>
+                <div class="stat-content">
+                    <h3>TOTAL COURSES</h3>
+                    <div class="stat-value">7</div>
+                    <div class="stat-change positive">+2 this semester</div>
+                </div>
+            </div>
+
+            <div class="stat-card assignments">
+                <div class="stat-icon">
+                    📝
+                </div>
+                <div class="stat-content">
+                    <h3>PENDING ASSIGNMENTS</h3>
+                    <div class="stat-value">3</div>
+                    <div class="stat-change negative">2 deadlines close</div>
+                </div>
+            </div>
+
+            <div class="stat-card deadlines">
+                <div class="stat-icon">
+                    ⏰
+                </div>
+                <div class="stat-content">
+                    <h3>UPCOMING DEADLINES</h3>
+                    <div class="stat-value">5</div>
+                    <div class="stat-change positive">On track</div>
+                </div>
+            </div>
+
+            <div class="stat-card progress">
+                <div class="stat-icon">
+                    📈
+                </div>
+                <div class="stat-content">
+                    <h3>LEARNING PROGRESS</h3>
+                    <div class="stat-value">78%</div>
+                    <div class="stat-change positive">+5% this week</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Learning Progress Chart -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3>Learning Progress</h3>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-color pbo"></span>
+                            <span>PBO</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color ai"></span>
+                            <span>AI</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color pancasila"></span>
+                            <span>Pancasila</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color dp"></span>
+                            <span>DP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-visual">
+                    <!-- Y-axis -->
+                    <div class="chart-y-axis">
+                        <div class="y-axis-label">100</div>
+                        <div class="y-axis-label">80</div>
+                        <div class="y-axis-label">60</div>
+                        <div class="y-axis-label">40</div>
+                        <div class="y-axis-label">20</div>
+                        <div class="y-axis-label">0</div>
+                    </div>
+
+                    <!-- Horizontal Grid Lines -->
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+                    <div class="grid-line"></div>
+
+                    <!-- Chart Bars -->
+                    <div class="chart-bars">
+                        <!-- PBO Bar -->
+                        <div class="chart-bar">
+                            <div class="bar-container">
+                                <div class="bar-fill pbo"></div>
+                                <div class="bar-tooltip">80% Progress</div>
+                            </div>
+                            <div class="bar-label">PBO</div>
+                            <div class="bar-value">80%</div>
+                        </div>
+
+                        <!-- AI Bar -->
+                        <div class="chart-bar">
+                            <div class="bar-container">
+                                <div class="bar-fill ai"></div>
+                                <div class="bar-tooltip">70% Progress</div>
+                            </div>
+                            <div class="bar-label">AI</div>
+                            <div class="bar-value">70%</div>
+                        </div>
+
+                        <!-- Pancasila Bar -->
+                        <div class="chart-bar">
+                            <div class="bar-container">
+                                <div class="bar-fill pancasila"></div>
+                                <div class="bar-tooltip">60% Progress</div>
+                            </div>
+                            <div class="bar-label">Pancasila</div>
+                            <div class="bar-value">60%</div>
+                        </div>
+
+                        <!-- DP Bar -->
+                        <div class="chart-bar">
+                            <div class="bar-container">
+                                <div class="bar-fill dp"></div>
+                                <div class="bar-tooltip">50% Progress</div>
+                            </div>
+                            <div class="bar-label">DP</div>
+                            <div class="bar-value">50%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity and Notifications -->
+            <div class="activity-container">
+                <!-- Recent Activity -->
+                <div class="activity-card">
+                    <h3>Recent Activity</h3>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon login">
+                                👤
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Login terakhir</div>
+                                <div class="activity-time">Hari ini, 14:30</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon course">
+                                🎯
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Akses Course AI</div>
+                                <div class="activity-time">Kemarin, 09:15</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon assignment">
+                                📤
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Upload Tugas PBO</div>
+                                <div class="activity-time">2 hari lalu</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Notifications -->
+                <div class="notifications-card">
+                    <h3>Notifications</h3>
+                    <ul class="notification-list">
+                        <li class="notification-item">
+                            <div class="notification-badge urgent"></div>
+                            <div class="notification-content">
+                                <div class="notification-text">Tugas AI deadline besok</div>
+                                <div class="notification-time">Hari ini, 10:00</div>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <div class="notification-badge info"></div>
+                            <div class="notification-content">
+                                <div class="notification-text">Materi baru PBO tersedia</div>
+                                <div class="notification-time">Kemarin, 15:30</div>
+                            </div>
+                        </li>
+                        <li class="notification-item">
+                            <div class="notification-badge update"></div>
+                            <div class="notification-content">
+                                <div class="notification-text">Update jadwal kuliah</div>
+                                <div class="notification-time">3 hari lalu</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- JavaScript -->
+    <script src="auth.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Cek login status
+        const session = await auth.checkSession();
+        if (!session.loggedIn || session.role === 'admin') {
+            window.location.href = 'login-user.html';
+            return;
+        }
+        
+        // Load user data
+        loadUserData(session.data);
+        
+        // Load dashboard data
+        loadDashboardData();
+    });
+    
+    function loadUserData(userData) {
+        document.getElementById('userName').textContent = userData.nama_lengkap || userData.full_name || 'User';
+        document.getElementById('userNIM').textContent = `NIM: ${userData.nim || '-'}`;
+        document.getElementById('userEmail').textContent = `Email: ${userData.email}`;
+        
+        // Update avatar dengan nama user
+        const name = encodeURIComponent(userData.nama_lengkap || 'User');
+        document.getElementById('userAvatar').src = 
+            `https://ui-avatars.com/api/?name=${name}&background=2d6cdf&color=fff`;
+    }
+    
+    async function loadDashboardData() {
+        try {
+            // Contoh: Fetch data dari API
+            // const response = await auth.fetchWithAuth('http://localhost/edulearn-project/backend/api/courses.php');
+            // const data = await response.json();
+            
+            // Untuk demo, gunakan data dummy
+            simulateAPICalls();
+            
+        } catch (error) {
+            console.error('Error loading dashboard:', error);
+            showError('Gagal memuat data dashboard');
+        }
+    }
+    
+    function simulateAPICalls() {
+        // Simulasi data dari API
+        setTimeout(() => {
+            document.getElementById('courseCount').textContent = '7 Mata Kuliah';
+            document.getElementById('activeAssignments').textContent = '3 Tugas';
+            document.getElementById('completedAssignments').textContent = '12 Tugas';
+            document.getElementById('upcomingDeadlines').textContent = '2 Deadline';
+            
+            // Load activities
+            const activities = [
+                { icon: 'fa-book', text: 'Mengakses materi PBO', time: 'Hari ini, 14:00' },
+                { icon: 'fa-upload', text: 'Mengumpulkan tugas AI', time: 'Kemarin, 09:15' },
+                { icon: 'fa-comment', text: 'Mengirim pesan ke dosen', time: '2 hari lalu' },
+                { icon: 'fa-check', text: 'Menyelesaikan quiz Web Programming', time: '3 hari lalu' }
+            ];
+            
+            const activitiesList = document.getElementById('activitiesList');
+            activitiesList.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas ${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>${activity.text}</p>
+                        <span class="activity-time">${activity.time}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+        }, 1000); // Simulasi loading
+    }
+    
+    function showError(message) {
+        alert('Error: ' + message);
+    }
+    </script>
+</div>

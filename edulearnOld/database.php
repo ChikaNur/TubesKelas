@@ -1,0 +1,37 @@
+<?php
+class Database {
+    private $host = "localhost";
+    private $db_name = "edulearn_db";
+    private $username = "root";
+    private $password = "";
+    private $conn;
+
+    public function getConnection() {
+        $this->conn = null;
+
+        try {
+            $this->conn = new PDO(
+                "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
+                $this->username,
+                $this->password
+            );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conn->exec("set names utf8");
+            
+            // Set timezone
+            $this->conn->exec("SET time_zone = '+07:00'");
+            
+        } catch(PDOException $exception) {
+            echo "Connection error: " . $exception->getMessage();
+        }
+
+        return $this->conn;
+    }
+}
+
+// Fungsi helper untuk koneksi cepat
+function getDB() {
+    $database = new Database();
+    return $database->getConnection();
+}
+?>

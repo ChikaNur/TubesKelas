@@ -1,108 +1,94 @@
 <?php
-/**
- * Courses CRUD Process Handler
- * Handles create, update, and delete operations for courses
- */
-
 require_once '../config/session.php';
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-// Check if user is admin
 if (!is_logged_in() || !is_admin()) {
     redirect('../login.php');
 }
 
 $db = getDB();
-$action = $_REQUEST['action'] ?? '';
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 try {
     switch ($action) {
         case 'add':
-            // Add new course
             $kode_mk = sanitize_input($_POST['kode_mk']);
             $nama_mk = sanitize_input($_POST['nama_mk']);
-            $deskripsi = sanitize_input($_POST['deskripsi']);
+            $deskripsi = sanitize_input($_POST['deskripsi'] ?? '');
             $sks = (int)$_POST['sks'];
             $semester = (int)$_POST['semester'];
             $dosen_id = !empty($_POST['dosen_id']) ? (int)$_POST['dosen_id'] : null;
             $status = $_POST['status'];
+            
+            if (empty($kode_mk) || empty($nama_mk) || empty($sks) || empty($semester)) {
+                throw new Exception('Kode MK, Nama MK, SKS, dan Semester wajib diisi');
+            }
             
             // Check if course code already exists
             $stmt = $db->prepare("SELECT mk_id FROM mata_kuliah WHERE kode_mk = ?");
             $stmt->execute([$kode_mk]);
-            
             if ($stmt->fetch()) {
-                $_SESSION['error_message'] = "Kode mata kuliah sudah digunakan";
-                redirect('../admin/courses.php');
+                throw new Exception('Kode mata kuliah sudah ada');
             }
             
-            $stmt = $db->prepare("
-                INSERT INTO mata_kuliah (kode_mk, nama_mk, deskripsi, sks, semester, dosen_id, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ");
+            $stmt = $db->prepare("INSERT INTO mata_kuliah (kode_mk, nama_mk, deskripsi, sks, semester, dosen_id, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
             $stmt->execute([$kode_mk, $nama_mk, $deskripsi, $sks, $semester, $dosen_id, $status]);
             
-            $_SESSION['success_message'] = "Mata kuliah berhasil ditambahkan";
+            $_SESSION['success_message'] = 'Mata kuliah berhasil ditambahkan';
             break;
             
         case 'edit':
-            // Update existing course
             $mk_id = (int)$_POST['mk_id'];
             $kode_mk = sanitize_input($_POST['kode_mk']);
             $nama_mk = sanitize_input($_POST['nama_mk']);
-            $deskripsi = sanitize_input($_POST['deskripsi']);
+            $deskripsi = sanitize_input($_POST['deskripsi'] ?? '');
             $sks = (int)$_POST['sks'];
             $semester = (int)$_POST['semester'];
             $dosen_id = !empty($_POST['dosen_id']) ? (int)$_POST['dosen_id'] : null;
             $status = $_POST['status'];
             
-            // Check if course code is used by another course
-            $stmt = $db->prepare("SELECT mk_id FROM mata_kuliah WHERE kode_mk = ? AND mk_id != ?");
-            $stmt->execute([$kode_mk, $mk_id]);
-            
-            if ($stmt->fetch()) {
-                $_SESSION['error_message'] = "Kode mata kuliah sudah digunakan";
-                redirect('../admin/courses.php');
+            if (empty($kode_mk) || empty($nama_mk) || empty($sks) || empty($semester)) {
+                throw new Exception('Kode MK, Nama MK, SKS, dan Semester wajib diisi');
             }
             
-            $stmt = $db->prepare("
-                UPDATE mata_kuliah 
-                SET kode_mk = ?, nama_mk = ?, deskripsi = ?, sks = ?, semester = ?, dosen_id = ?, status = ?
-                WHERE mk_id = ?
-            ");
+            // Check if course code is taken by another course
+            $stmt = $db->prepare("SELECT mk_id FROM mata_kuliah WHERE kode_mk = ? AND mk_id != ?");
+            $stmt->execute([$kode_mk, $mk_id]);
+            if ($stmt->fetch()) {
+                throw new Exception('Kode mata kuliah sudah digunakan course lain');
+            }
+            
+            $stmt = $db->prepare("UPDATE mata_kuliah SET kode_mk = ?, nama_mk = ?, deskripsi = ?, sks = ?, semester = ?, dosen_id = ?, status = ? WHERE mk_id = ?");
             $stmt->execute([$kode_mk, $nama_mk, $deskripsi, $sks, $semester, $dosen_id, $status, $mk_id]);
             
-            $_SESSION['success_message'] = "Mata kuliah berhasil diperbarui";
+            $_SESSION['success_message'] = 'Mata kuliah berhasil diupdate';
             break;
             
         case 'delete':
-            // Delete course
             $mk_id = (int)$_GET['mk_id'];
             
             // Check if course has enrollments
             $stmt = $db->prepare("SELECT COUNT(*) as count FROM enrollments WHERE mk_id = ?");
             $stmt->execute([$mk_id]);
-            $count = $stmt->fetch()['count'];
+            $result = $stmt->fetch();
             
-            if ($count > 0) {
-                $_SESSION['error_message'] = "Tidak dapat menghapus mata kuliah yang memiliki mahasiswa terdaftar";
-                redirect('../admin/courses.php');
+            if ($result['count'] > 0) {
+                throw new Exception('Tidak dapat menghapus mata kuliah yang memiliki mahasiswa terdaftar');
             }
             
             $stmt = $db->prepare("DELETE FROM mata_kuliah WHERE mk_id = ?");
             $stmt->execute([$mk_id]);
             
-            $_SESSION['success_message'] = "Mata kuliah berhasil dihapus";
+            $_SESSION['success_message'] = 'Mata kuliah berhasil dihapus';
             break;
             
         default:
-            $_SESSION['error_message'] = "Aksi tidak valid";
-            break;
+            throw new Exception('Invalid action');
     }
-} catch (PDOException $e) {
-    error_log("Course CRUD Error: " . $e->getMessage());
-    $_SESSION['error_message'] = "Terjadi kesalahan sistem: " . $e->getMessage();
+} catch (Exception $e) {
+    $_SESSION['error_message'] = $e->getMessage();
 }
 
-redirect('../admin/courses.php');
+redirect('courses.php');
+?>

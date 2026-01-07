@@ -167,11 +167,11 @@ $stats = $statsStmt->fetch();
                         <td><?= format_date($user['created_at']) ?></td>
                         <td>
                             <div class="action-buttons">
-                                <button class="btn-icon btn-edit" onclick="editUser(<?= $user['user_id'] ?>)" title="Edit">✏️</button>
+                                <button class="btn-icon btn-edit" onclick="editUser(<?= $user['user_id'] ?>, '<?= escape_html($user['nama']) ?>', '<?= escape_html($user['email']) ?>', '<?= escape_html($user['nim'] ?? '') ?>', '<?= $user['role'] ?>')" title="Edit">✏️</button>
                                 <?php if ($user['user_id'] != get_user_info('user_id')): ?>
                                 <button class="btn-icon btn-delete" onclick="deleteUser(<?= $user['user_id'] ?>, '<?= escape_html($user['nama']) ?>')" title="Delete">🗑️</button>
                                 <?php endif; ?>
-                            </div>
+            </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -218,6 +218,41 @@ $stats = $statsStmt->fetch();
     </div>
 </div>
 
+<!-- Edit User Modal -->
+<div id="editUserModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Edit User</h2>
+        <form action="users_process.php" method="POST">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="user_id" id="edit_user_id">
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" name="nama" id="edit_nama" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" name="email" id="edit_email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>NIM (for students)</label>
+                <input type="text" name="nim" id="edit_nim" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Role *</label>
+                <select name="role" id="edit_role" class="form-control" required>
+                    <option value="mahasiswa">Student</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="submit" class="btn btn-primary" style="flex:1">Update User</button>
+                <button type="button" class="btn btn-outline" onclick="closeModal()" style="flex:1">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
 function showAddUserModal() {
     document.getElementById('addUserModal').style.display = 'flex';
@@ -231,10 +266,16 @@ function deleteUser(id, name) {
         window.location.href = 'users_process.php?action=delete&user_id=' + id;
     }
 }
-function editUser(id) {
-    // For future implementation: fetch user data and populate edit form
-    alert('Edit user functionality will be implemented soon. User ID: ' + id + '\n\nFor now, you can delete and recreate the user.');
+function editUser(userId, nama, email, nim, role) {
+    document.getElementById('editUserModal').style.display = 'flex';
+    document.getElementById('edit_user_id').value = userId;
+    document.getElementById('edit_nama').value = nama;
+    document.getElementById('edit_email').value = email;
+    document.getElementById('edit_nim').value = nim || '';
+    document.getElementById('edit_role').value = role;
 }
+
 </script>
 </body>
 </html>
+```

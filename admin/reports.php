@@ -9,6 +9,12 @@ if (!is_logged_in() || !is_admin()) {
 
 $db = getDB();
 
+// Get filter parameters
+$sortOrder = isset($_GET['sort']) && in_array($_GET['sort'], ['asc', 'desc']) ? $_GET['sort'] : 'desc';
+$monthFilter = isset($_GET['month']) ? sanitize_input($_GET['month']) : '';
+$dateFrom = isset($_GET['date_from']) ? sanitize_input($_GET['date_from']) : '';
+$dateTo = isset($_GET['date_to']) ? sanitize_input($_GET['date_to']) : '';
+
 // Get statistics for reports
 $stats = [];
 
@@ -49,15 +55,35 @@ $stmt = $db->query("
 ");
 $stats['enrollments'] = $stmt->fetch();
 
-// Recent activity (last 10 enrollments)
-$stmt = $db->query("
+// Recent activity with filters
+$activitySql = "
     SELECT u.nama, mk.nama_mk, e.enrolled_at
     FROM enrollments e
     INNER JOIN users u ON e.user_id = u.user_id
     INNER JOIN mata_kuliah mk ON e.mk_id = mk.mk_id
-    ORDER BY e.enrolled_at DESC
-    LIMIT 10
-");
+    WHERE 1=1
+";
+$activityParams = [];
+
+if ($monthFilter) {
+    $activitySql .= " AND DATE_FORMAT(e.enrolled_at, '%Y-%m') = ?";
+    $activityParams[] = $monthFilter;
+}
+
+if ($dateFrom) {
+    $activitySql .= " AND e.enrolled_at >= ?";
+    $activityParams[] = $dateFrom . ' 00:00:00';
+}
+
+if ($dateTo) {
+    $activitySql .= " AND e.enrolled_at <= ?";
+    $activityParams[] = $dateTo . ' 23:59:59';
+}
+
+$activitySql .= " ORDER BY e.enrolled_at " . strtoupper($sortOrder) . " LIMIT 10";
+
+$stmt = $db->prepare($activitySql);
+$stmt->execute($activityParams);
 $recent_activity = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -135,10 +161,74 @@ $recent_activity = $stmt->fetchAll();
                 </div>
             </div>
         </div>
+        
+        <!-- Activity Filters -->
+        <div class="admin-search-filter" style="margin: 30px 0 20px 0;">
+            <div style="flex: 1;">
+                <h3 style="margin: 0; color: var(--text-primary);">📋 Recent Activity</h3>
+            </div>
+            <div class="filter-options">
+                <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                    <option value="">📅 All Months</option>
+                    <?php
+                    $months = [
+                        '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
+                        '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
+                        '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
+                    ];
+                    $currentYear = date('Y');
+                    for ($y = $currentYear - 1; $y <= $currentYear + 1; $y++) {
+                        foreach ($months as $m => $monthName) {
+                            $value = "$y-$m";
+                            $selected = $monthFilter === $value ? 'selected' : '';
+                            echo "<option value='$value' $selected>$monthName $y</option>";
+                        }
+                    }
+                    ?>
+                </select>
+                
+                <input type="date" name="date_from" value="<?= escape_html($dateFrom) ?>" 
+                       class="admin-date-input" placeholder="From Date" 
+                       onchange="document.getElementById('filterForm').submit()">
+                       
+                <input type="date" name="date_to" value="<?= escape_html($dateTo) ?>" 
+                       class="admin-date-input" placeholder="To Date" 
+                       onchange="document.getElementById('filterForm').submit()">
+                
+                <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                    <option value="desc" <?= $sortOrder === 'desc' ? 'selected' : '' ?>>⬇️ Newest First</option>
+                    <option value="asc" <?= $sortOrder === 'asc' ? 'selected' : '' ?>>⬆️ Oldest First</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Hidden form for filter submission -->
+        <form id="filterForm" method="GET" style="display: none;">
+            <input type="hidden" name="month" value="<?= escape_html($monthFilter) ?>">
+            <input type="hidden" name="date_from" value="<?= escape_html($dateFrom) ?>">
+            <input type="hidden" name="date_to" value="<?= escape_html($dateTo) ?>">
+            <input type="hidden" name="sort" value="<?= $sortOrder ?>">
+        </form>
+        
+        <script>
+        document.querySelectorAll('.admin-filter-select, .admin-date-input').forEach(el => {
+            el.addEventListener('change', function() {
+                const form = document.getElementById('filterForm');
+                const name = this.name;
+                let input = form.querySelector(`input[name="${name}"]`);
+                if (!input) {
+                    input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    form.appendChild(input);
+                }
+                input.value = this.value;
+            });
+        });
+        </script>
 
-        <!-- Recent Activity -->
+        <!-- Recent Activity Table -->
         <div class="admin-table-container">
-            <h3>📋 Recent Activity</h3>
             <table class="admin-table">
                 <thead>
                     <tr>
@@ -157,18 +247,6 @@ $recent_activity = $stmt->fetchAll();
                     <?php endforeach; ?>
                 </tbody>
             </table>
-        </div>
-
-        <!-- Export Options -->
-        <div class="admin-table-container">
-            <h3>📥 Export Data</h3>
-            <p style="color: #7f8c8d; margin-bottom: 20px;">Export system data to CSV for further analysis</p>
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                <button class="btn btn-primary" onclick="alert('Export Users - Feature coming soon!')">Export Users Data</button>
-                <button class="btn btn-primary" onclick="alert('Export Courses - Feature coming soon!')">Export Courses Data</button>
-                <button class="btn btn-primary" onclick="alert('Export Enrollments - Feature coming soon!')">Export Enrollments</button>
-                <button class="btn btn-primary" onclick="alert('Export Submissions - Feature coming soon!')">Export Submissions</button>
-            </div>
         </div>
     </main>
 </div>

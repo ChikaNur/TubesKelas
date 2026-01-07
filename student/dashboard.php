@@ -64,7 +64,7 @@ $courses_progress = $stmt->fetchAll();
 
 // Get recent assignments close to deadline
 $stmt = $db->prepare("
-    SELECT t.judul, t.deadline, mk.nama_mk, mk.kode_mk
+    SELECT t.judul, t.deadline, mk.nama_mk, mk.kode_mk, mk.mk_id
     FROM tugas t
     INNER JOIN enrollments e ON t.mk_id = e.mk_id
     INNER JOIN mata_kuliah mk ON t.mk_id = mk.mk_id
@@ -83,7 +83,7 @@ $upcoming_tasks = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - EduLearn</title>
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/student-style.css">
 </head>
 <body>
 <div class="container">
@@ -167,7 +167,7 @@ $upcoming_tasks = $stmt->fetchAll();
             <div class="chart-container">
                 <div class="chart-header">
                     <h3>Learning Progress</h3>
-                    <div class="chart-legend">
+                    <div class="chart-legend" id="chartLegend">
                         <?php foreach ($courses_progress as $index => $course): ?>
                         <div class="legend-item">
                             <span class="legend-color" style="background: <?= ['#3498db', '#2ecc71', '#f39c12', '#e74c3c'][$index] ?? '#95a5a6' ?>"></span>
@@ -178,39 +178,7 @@ $upcoming_tasks = $stmt->fetchAll();
                 </div>
 
                 <div class="chart-visual">
-                    <!-- Y-axis -->
-                    <div class="chart-y-axis">
-                        <div class="y-axis-label">100</div>
-                        <div class="y-axis-label">80</div>
-                        <div class="y-axis-label">60</div>
-                        <div class="y-axis-label">40</div>
-                        <div class="y-axis-label">20</div>
-                        <div class="y-axis-label">0</div>
-                    </div>
-
-                    <!-- Horizontal Grid Lines -->
-                    <div class="grid-line"></div>
-                    <div class="grid-line"></div>
-                    <div class="grid-line"></div>
-                    <div class="grid-line"></div>
-                    <div class="grid-line"></div>
-
-                    <!-- Chart Bars -->
-                    <div class="chart-bars">
-                        <?php 
-                        $colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c'];
-                        foreach ($courses_progress as $index => $course): 
-                        ?>
-                        <div class="chart-bar">
-                            <div class="bar-container">
-                                <div class="bar-fill" style="height: <?= $course['progress'] ?>%; background: <?= $colors[$index] ?? '#95a5a6' ?>"></div>
-                                <div class="bar-tooltip"><?= $course['progress'] ?>% Progress</div>
-                            </div>
-                            <div class="bar-label"><?= escape_html($course['kode_mk']) ?></div>
-                            <div class="bar-value"><?= $course['progress'] ?>%</div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
+                    <canvas id="progressChart" style="max-height: 300px;"></canvas>
                 </div>
             </div>
 
@@ -229,16 +197,18 @@ $upcoming_tasks = $stmt->fetchAll();
                             </li>
                         <?php else: ?>
                             <?php foreach ($upcoming_tasks as $task): ?>
-                            <li class="notification-item">
-                                <div class="notification-badge <?= (strtotime($task['deadline']) - time() < 86400) ? 'urgent' : 'info' ?>"></div>
-                                <div class="notification-content">
-                                    <div class="notification-text">
-                                        <strong><?= escape_html($task['nama_mk']) ?></strong><br>
-                                        <?= escape_html($task['judul']) ?>
+                            <a href="course_detail.php?id=<?= $task['mk_id'] ?>" style="text-decoration: none; color: inherit; display: block;">
+                                <li class="notification-item" style="cursor: pointer; transition: all 0.3s;">
+                                    <div class="notification-badge <?= (strtotime($task['deadline']) - time() < 86400) ? 'urgent' : 'info' ?>"></div>
+                                    <div class="notification-content">
+                                        <div class="notification-text">
+                                            <strong><?= escape_html($task['nama_mk']) ?></strong><br>
+                                            <?= escape_html($task['judul']) ?>
+                                        </div>
+                                        <div class="notification-time"><?= time_difference($task['deadline']) ?></div>
                                     </div>
-                                    <div class="notification-time"><?= time_difference($task['deadline']) ?></div>
-                                </div>
-                            </li>
+                                </li>
+                            </a>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </ul>
@@ -247,5 +217,110 @@ $upcoming_tasks = $stmt->fetchAll();
         </div>
     </main>
 </div>
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+// Prepare data from PHP
+const courseData = <?= json_encode(array_map(function($c) {
+    return [
+        'label' => $c['kode_mk'],
+        'progress' => (int)$c['progress']
+    ];
+}, $courses_progress)) ?>;
+
+// Chart colors
+const colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#1abc9c'];
+
+// Create the chart
+const ctx = document.getElementById('progressChart');
+const progressChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: courseData.map(c => c.label),
+        datasets: [{
+            label: 'Progress (%)',
+            data: courseData.map(c => c.progress),
+            backgroundColor: colors.slice(0, courseData.length).map(color => color + '99'), // Add transparency
+            borderColor: colors.slice(0, courseData.length),
+            borderWidth: 2,
+            borderRadius: 8,
+            borderSkipped: false,
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                backgroundColor: '#2c3e50',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                padding: 12,
+                borderRadius: 8,
+                displayColors: true,
+                callbacks: {
+                    label: function(context) {
+                        return context.parsed.y + '% Complete';
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                ticks: {
+                    callback: function(value) {
+                        return value + '%';
+                    },
+                    color: '#64748b',
+                    font: {
+                        size: 12
+                    }
+                },
+                grid: {
+                    color: '#f1f5f9',
+                    drawBorder: false
+                }
+            },
+            x: {
+                ticks: {
+                    color: '#2c3e50',
+                    font: {
+                        size: 13,
+                        weight: '600'
+                    }
+                },
+                grid: {
+                    display: false
+                }
+            }
+        },
+        animation: {
+            duration: 1500,
+            easing: 'easeInOutQuart'
+        },
+        interaction: {
+            intersect: false,
+            mode: 'index'
+        }
+    }
+});
+
+// Add hover effect on chart
+ctx.style.cursor = 'pointer';
+ctx.addEventListener('mousemove', (e) => {
+    const points = progressChart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+    if (points.length) {
+        e.target.style.cursor = 'pointer';
+    } else {
+        e.target.style.cursor = 'default';
+    }
+});
+</script>
 </body>
 </html>

@@ -57,7 +57,7 @@ $overdue = count(array_filter($assignments, fn($a) => $a['status'] === 'overdue'
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignments - EduLearn</title>
-    <link rel="stylesheet" href="../assets/css/Asignment.css">
+    <link rel="stylesheet" href="../assets/css/student-style.css">
 </head>
 <body>
 <div class="container">
@@ -113,50 +113,56 @@ $overdue = count(array_filter($assignments, fn($a) => $a['status'] === 'overdue'
                 </div>
             <?php else: ?>
                 <?php foreach ($assignments as $assignment): ?>
-                <div class="assignment-item <?= $assignment['status'] ?>">
-                    <h3 class="course-title">
-                        <span class="course-icon"><?= strtoupper(substr($assignment['kode_mk'], 0, 3)) ?></span>
-                        <?= escape_html($assignment['nama_mk']) ?>
-                    </h3>
-                    <p class="assignment-title"><?= escape_html($assignment['judul']) ?></p>
-                    
-                    <?php if ($assignment['deskripsi']): ?>
-                    <p class="assignment-desc"><?= escape_html($assignment['deskripsi']) ?></p>
-                    <?php endif; ?>
-                    
-                    <div class="deadline">
-                        <span>⏰ Deadline: <?= format_date($assignment['deadline']) ?></span>
-                        <?php if ($assignment['status'] === 'pending' && $assignment['days_left'] <= 3): ?>
-                            <span class="urgent">(<?= $assignment['days_left'] ?> hari lagi!)</span>
+                <a href="course_detail.php?id=<?= $assignment['mk_id'] ?>" style="text-decoration: none; color: inherit; display: block;">
+                    <div class="assignment-item" style="cursor: pointer;">
+                        <h3 class="course-title">
+                            <span class="course-icon" style="background: <?= $assignment['color'] ?>">
+                                <?= substr($assignment['kode_mk'], 0, 2) ?>
+                            </span>
+                            <?= escape_html($assignment['nama_mk']) ?>
+                        </h3>
+                        
+                        <div class="assignment-title"><?= escape_html($assignment['judul']) ?></div>
+                        
+                        <?php if ($assignment['deskripsi']): ?>
+                        <div class="assignment-desc"><?= escape_html($assignment['deskripsi']) ?></div>
                         <?php endif; ?>
+                        
+                        <div class="deadline">
+                            ⏰ Deadline: <?= format_date($assignment['deadline']) ?>
+                            <?php 
+                            $days_left = ceil((strtotime($assignment['deadline']) - time()) / 86400);
+                            if ($assignment['status'] === 'pending' && $days_left <= 3 && $days_left > 0): 
+                            ?>
+                                <span style="color: #e74c3c;">(<?= $days_left ?> hari lagi!)</span>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="upload-section" onclick="event.stopPropagation();">
+                            <?php if ($assignment['submission_id']): ?>
+                                <div class="status-badge uploaded">✓ Telah diunggah</div>
+                                <div class="submission-info">
+                                    <small>Dikumpulkan: <?= format_date($assignment['submitted_at']) ?></small>
+                                    <?php if ($assignment['score']): ?>
+                                        <strong style="color: #27ae60;">Nilai: <?= $assignment['score'] ?></strong>
+                                    <?php else: ?>
+                                        <span class="waiting-grade">Menunggu penilaian</span>
+                                    <?php endif; ?>
+                                </div>
+                            <?php elseif (strtotime($assignment['deadline']) < time()): ?>
+                                <div class="status-badge overdue">⚠️ Terlambat</div>
+                                <button class="upload-btn late" onclick="openUploadModal(<?= $assignment['tugas_id'] ?>, '<?= escape_html($assignment['judul']) ?>')">
+                                    Unggah Sekarang (Terlambat)
+                                </button>
+                            <?php else: ?>
+                                <div class="status-badge pending">⏳ Belum diunggah</div>
+                                <button class="upload-btn" onclick="openUploadModal(<?= $assignment['tugas_id'] ?>, '<?= escape_html($assignment['judul']) ?>')">
+                                    📤 Unggah Tugas
+                                </button>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    
-                    <div class="upload-section">
-                        <?php if ($assignment['status'] === 'uploaded'): ?>
-                            <span class="status-badge uploaded">✓ Telah diunggah</span>
-                            <div class="submission-info">
-                                <small>Dikumpulkan: <?= format_date($assignment['submitted_at']) ?></small>
-                                <?php if ($assignment['score']): ?>
-                                    <strong class="score">Nilai: <?= $assignment['score'] ?></strong>
-                                <?php else: ?>
-                                    <span class="waiting-grade">Menunggu penilaian</span>
-                                <?php endif; ?>
-                            </div>
-                        <?php elseif ($assignment['status'] === 'overdue'): ?>
-                            <span class="status-badge overdue">⚠️ Terlambat</span>
-                            <button class="upload-btn late" 
-                                    onclick="openUploadModal(<?= $assignment['tugas_id'] ?>, '<?= escape_html($assignment['judul']) ?>')">
-                                Unggah Sekarang (Terlambat)
-                            </button>
-                        <?php else: ?>
-                            <span class="status-badge pending">⏳ Belum diunggah</span>
-                            <button class="upload-btn" 
-                                    onclick="openUploadModal(<?= $assignment['tugas_id'] ?>, '<?= escape_html($assignment['judul']) ?>')">
-                                📤 Unggah Tugas
-                            </button>
-                        <?php endif; ?>
-                    </div>
-                </div>
+                </a>
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>

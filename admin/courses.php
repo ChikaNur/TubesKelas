@@ -10,14 +10,52 @@ if (!is_logged_in() || !is_admin()) {
 
 $db = getDB();
 
-// Get all courses with instructor information
-$stmt = $db->query("
-    SELECT mk.*, d.nama_dosen,
+// Get filters
+$searchQuery = isset($_GET['search']) ? sanitize_input($_GET['search']) : '';
+$semesterFilter = isset($_GET['semester']) ? (int)$_GET['semester'] : 0;
+$statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
+$sksFilter = isset($_GET['sks']) ? (int)$_GET['sks'] : 0;
+$dosenFilter = isset($_GET['dosen']) ? (int)$_GET['dosen'] : 0;
+
+// Build query
+$sql = "SELECT mk.*, d.nama_dosen,
            (SELECT COUNT(*) FROM enrollments WHERE mk_id = mk.mk_id) as student_count
     FROM mata_kuliah mk
     LEFT JOIN dosen d ON mk.dosen_id = d.dosen_id
-    ORDER BY mk.created_at DESC
-");
+    WHERE 1=1";
+$params = [];
+
+if ($searchQuery) {
+    $sql .= " AND (mk.nama_mk LIKE ? OR mk.kode_mk LIKE ?)";
+    $searchTerm = "%$searchQuery%";
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
+}
+
+if ($semesterFilter > 0) {
+    $sql .= " AND mk.semester = ?";
+    $params[] = $semesterFilter;
+}
+
+if ($statusFilter && in_array($statusFilter, ['aktif', 'draft', 'arsip'])) {
+    $sql .= " AND mk.status = ?";
+    $params[] = $statusFilter;
+}
+
+if ($sksFilter > 0) {
+    $sql .= " AND mk.sks = ?";
+    $params[] = $sksFilter;
+}
+
+if ($dosenFilter > 0) {
+    $sql .= " AND mk.dosen_id = ?";
+    $params[] = $dosenFilter;
+}
+
+$sql .= " ORDER BY mk.created_at DESC";
+
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
 $courses = $stmt->fetchAll();
 
 // Get all instructors for the add/edit form
@@ -134,6 +172,78 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
             <?php if ($error_message): ?>
                 <div class="alert alert-danger"><?= escape_html($error_message) ?></div>
             <?php endif; ?>
+
+            <!-- Filters -->
+            <div class="admin-search-filter">
+                <div class="search-box">
+                    <form method="GET">
+                        <input type="text" name="search" placeholder="Search by course name or code..." value="<?= escape_html($searchQuery) ?>" class="admin-search-input">
+                    </form>
+                </div>
+                <div class="filter-options">
+                    <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                        <option value="">📅 All Semesters</option>
+                        <?php for ($i = 1; $i <= 8; $i++): ?>
+                        <option value="<?= $i ?>" <?= $semesterFilter == $i ? 'selected' : '' ?>>Semester <?= $i ?></option>
+                        <?php endfor; ?>
+                    </select>
+                    
+                    <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                        <option value="">💼 All Status</option>
+                        <option value="aktif" <?= $statusFilter === 'aktif' ? 'selected' : '' ?>>Aktif</option>
+                        <option value="draft" <?= $statusFilter === 'draft' ? 'selected' : '' ?>>Draft</option>
+                        <option value="arsip" <?= $statusFilter === 'arsip' ? 'selected' : '' ?>>Arsip</option>
+                    </select>
+                    
+                    <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                        <option value="">📊 All SKS</option>
+                        <?php for ($i = 1; $i <= 6; $i++): ?>
+                        <option value="<?= $i ?>" <?= $sksFilter == $i ? 'selected' : '' ?>><?= $i ?> SKS</option>
+                        <?php endfor; ?>
+                    </select>
+                    
+                    <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                        <option value="">👨‍🏫 All Lecturers</option>
+                        <?php foreach ($instructors as $instructor): ?>
+                        <option value="<?= $instructor['dosen_id'] ?>" <?= $dosenFilter == $instructor['dosen_id'] ? 'selected' : '' ?>>
+                            <?= escape_html($instructor['nama_dosen']) ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Hidden form for filter submission -->
+            <form id="filterForm" method="GET" style="display: none;">
+                <input type="hidden" name="search" value="<?= escape_html($searchQuery) ?>">
+                <input type="hidden" name="semester" value="<?= $semesterFilter ?>">
+                <input type="hidden" name="status" value="<?= escape_html($statusFilter) ?>">
+                <input type="hidden" name="sks" value="<?= $sksFilter ?>">
+                <input type="hidden" name="dosen" value="<?= $dosenFilter ?>">
+            </form>
+            
+            <script>
+            // Update hidden form fields when filters change
+            document.querySelectorAll('.admin-filter-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    const formId = this.getAttribute('form');
+                    const form = document.getElementById(formId);
+                    const name = this.name || this.previousElementSibling?.name || 
+                               (this.options[0].textContent.includes('Semester') ? 'semester' :
+                                this.options[0].textContent.includes('Status') ? 'status' :
+                                this.options[0].textContent.includes('SKS') ? 'sks' : 'dosen');
+                    
+                    let input = form.querySelector(`input[name="${name}"]`);
+                    if (!input) {
+                        input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = name;
+                        form.appendChild(input);
+                    }
+                    input.value = this.value;
+                });
+            });
+            </script>
 
             <!-- Courses Table -->
             <div class="admin-table-container">

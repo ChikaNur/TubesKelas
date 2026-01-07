@@ -1,8 +1,4 @@
 <?php
-/**
- * Users CRUD Process Handler (Admin)
- */
-
 require_once '../config/session.php';
 require_once '../config/database.php';
 require_once '../includes/functions.php';
@@ -12,65 +8,85 @@ if (!is_logged_in() || !is_admin()) {
 }
 
 $db = getDB();
-$action = $_REQUEST['action'] ?? '';
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 try {
     switch ($action) {
         case 'add':
             $nama = sanitize_input($_POST['nama']);
             $email = sanitize_input($_POST['email']);
-            $nim = !empty($_POST['nim']) ? sanitize_input($_POST['nim']) : null;
+            $nim = sanitize_input($_POST['nim'] ?? '');
             $role = $_POST['role'];
             $password = $_POST['password'];
             
-            // Check duplicate email
+            // Validate
+            if (empty($nama) || empty($email) || empty($role) || empty($password)) {
+                throw new Exception('Semua field wajib harus diisi');
+            }
+            
+            if (strlen($password) < 6) {
+                throw new Exception('Password minimal 6 karakter');
+            }
+            
+            // Check if email already exists
             $stmt = $db->prepare("SELECT user_id FROM users WHERE email = ?");
             $stmt->execute([$email]);
             if ($stmt->fetch()) {
-                $_SESSION['error_message'] = "Email sudah digunakan";
-                redirect('users.php');
+                throw new Exception('Email sudah terdaftar');
             }
             
-            // Check duplicate NIM
-            if ($nim) {
-                $stmt = $db->prepare("SELECT user_id FROM users WHERE nim = ?");
-                $stmt->execute([$nim]);
-                if ($stmt->fetch()) {
-                    $_SESSION['error_message'] = "NIM sudah digunakan";
-                    redirect('users.php');
-                }
+            // Hash password and insert
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $db->prepare("INSERT INTO users (nama, email, nim, role, password, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+            $stmt->execute([$nama, $email, $nim, $role, $hashed_password]);
+            
+            $_SESSION['success_message'] = 'User berhasil ditambahkan';
+            break;
+            
+        case 'edit':
+            $user_id = (int)$_POST['user_id'];
+            $nama = sanitize_input($_POST['nama']);
+            $email = sanitize_input($_POST['email']);
+            $nim = sanitize_input($_POST['nim'] ?? '');
+            $role = $_POST['role'];
+            
+            if (empty($nama) || empty($email) || empty($role)) {
+                throw new Exception('Nama, email, dan role wajib diisi');
             }
             
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            // Check if email is taken by another user
+            $stmt = $db->prepare("SELECT user_id FROM users WHERE email = ? AND user_id != ?");
+            $stmt->execute([$email, $user_id]);
+            if ($stmt->fetch()) {
+                throw new Exception('Email sudah digunakan user lain');
+            }
             
-            $stmt = $db->prepare("INSERT INTO users (nama, email, nim, password, role) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$nama, $email, $nim, $hashedPassword, $role]);
+            $stmt = $db->prepare("UPDATE users SET nama = ?, email = ?, nim = ?, role = ? WHERE user_id = ?");
+            $stmt->execute([$nama, $email, $nim, $role, $user_id]);
             
-            $_SESSION['success_message'] = "User berhasil ditambahkan";
+            $_SESSION['success_message'] = 'User berhasil diupdate';
             break;
             
         case 'delete':
             $user_id = (int)$_GET['user_id'];
             
-            // Can't delete yourself
+            // Prevent deleting self
             if ($user_id == get_user_info('user_id')) {
-                $_SESSION['error_message'] = "Tidak dapat menghapus user sendiri";
-                redirect('users.php');
+                throw new Exception('Tidak bisa menghapus akun sendiri');
             }
             
             $stmt = $db->prepare("DELETE FROM users WHERE user_id = ?");
             $stmt->execute([$user_id]);
             
-            $_SESSION['success_message'] = "User berhasil dihapus";
+            $_SESSION['success_message'] = 'User berhasil dihapus';
             break;
             
         default:
-            $_SESSION['error_message'] = "Aksi tidak valid";
-            break;
+            throw new Exception('Invalid action');
     }
-} catch (PDOException $e) {
-    error_log("User CRUD Error: " . $e->getMessage());
-    $_SESSION['error_message'] = "Terjadi kesalahan sistem";
+} catch (Exception $e) {
+    $_SESSION['error_message'] = $e->getMessage();
 }
 
 redirect('users.php');
+?>

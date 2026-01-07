@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduLearn - Platform Pembelajaran Digital</title>
+    <link rel="stylesheet" href="adminuser.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- ========== PERTAMA: HALAMAN PILIHAN LOGIN ========== -->
+    <div id="selection-page" class="page active">
+        <div class="selection-container">
+            <!-- Header -->
+            <div class="selection-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>EduLearn</h1>
+                </div>
+                <p class="tagline">Platform Pembelajaran Digital Terpadu</p>
+            </div>
+
+            <!-- Pilihan Login -->
+            <div class="selection-options">
+                <h2>Masuk Sebagai</h2>
+                <p class="subtitle">Pilih peran Anda untuk melanjutkan</p>
+                
+                <div class="options-grid">
+                    <!-- Option 1: User/Mahasiswa -->
+                    <div class="option-card" id="user-option">
+                        <div class="option-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="option-content">
+                            <h3>User / Mahasiswa</h3>
+                            <p>Akses materi pembelajaran, tugas, dan fitur belajar</p>
+                            <ul class="option-features">
+                                <li><i class="fas fa-check-circle"></i> Akses semua kursus</li>
+                                <li><i class="fas fa-check-circle"></i> Submit tugas online</li>
+                                <li><i class="fas fa-check-circle"></i> Pantau progress belajar</li>
+                                <li><i class="fas fa-check-circle"></i> Interaksi dengan dosen</li>
+                            </ul>
+                        </div>
+                        <button class="option-btn" id="login-as-user">
+                            <span>Masuk sebagai User</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Option 2: Admin -->
+                    <div class="option-card" id="admin-option">
+                        <div class="option-icon admin">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="option-content">
+                            <h3>Administrator</h3>
+                            <p>Kelola sistem, pengguna, dan konten pembelajaran</p>
+                            <ul class="option-features">
+                                <li><i class="fas fa-check-circle"></i> Manajemen pengguna</li>
+                                <li><i class="fas fa-check-circle"></i> Kelola kursus & materi</li>
+                                <li><i class="fas fa-check-circle"></i> Pantau tugas & deadline</li>
+                                <li><i class="fas fa-check-circle"></i> Generate laporan</li>
+                            </ul>
+                        </div>
+                        <button class="option-btn admin" id="login-as-admin">
+                            <span>Masuk sebagai Admin</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Info Tambahan -->
+                <div class="selection-info">
+                    <p><i class="fas fa-info-circle"></i> Belum punya akun? <a href="#" id="register-link">Daftar sebagai Mahasiswa</a></p>
+                    <p><i class="fas fa-question-circle"></i> Butuh bantuan? <a href="#" id="help-link">Lihat panduan pengguna</a></p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="selection-footer">
+                <p>&copy; 2024 EduLearn. Semua hak dilindungi.</p>
+                <div class="footer-links">
+                    <a href="#">Syarat & Ketentuan</a>
+                    <a href="#">Kebijakan Privasi</a>
+                    <a href="#">Kontak</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== KEDUA: HALAMAN LOGIN USER ========== -->
+    <div id="user-login-page" class="page">
+        <div class="user-login-container">
+            <!-- Back Button -->
+            <button class="back-btn" id="back-from-user">
+                <i class="fas fa-arrow-left"></i>
+                <span>Kembali ke Pilihan</span>
+            </button>
+
+            <div class="user-login-wrapper">
+                <!-- Left Panel - Info -->
+                <div class="user-login-left">
+                    <div class="user-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h2>EduLearn</h2>
+                    </div>
+                    
+                    <div class="user-features">
+                        <div class="user-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>7+ Mata Kuliah</h4>
+                                <p>Akses semua materi pembelajaran</p>
+                            </div>
+                        </div>
+                        
+                        <div class="user-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Tugas Terkelola</h4>
+                                <p>Pantau deadline dan submit tugas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="user-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Jadwal Pintar</h4>
+                                <p>Atur jadwal perkuliahan dengan mudah</p>
+                            </div>
+                        </div>
+                        
+                        <div class="user-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Progress Tracking</h4>
+                                <p>Pantau perkembangan belajar Anda</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-stats">
+                        <div class="stat-item">
+                            <h3>5000+</h3>
+                            <p>mahasiswa aktif</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>4.8/5</h3>
+                            <p>rating pengguna</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Login Form -->
+                <div class="user-login-right">
+                    <div class="login-form-container">
+                        <div class="form-header">
+                            <h2>Login Mahasiswa</h2>
+                            <p>Masuk ke akun Anda untuk melanjutkan pembelajaran</p>
+                        </div>
+                        
+                        <form id="user-login-form">
+                            <div class="form-group">
+                                <label for="user-email">EMAIL</label>
+                                <input type="email" id="user-email" class="form-field" 
+                                       placeholder="student@email.ac.id" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="user-password">PASSWORD</label>
+                                <div class="password-container">
+                                    <input type="password" id="user-password" class="form-field" 
+                                           placeholder="Masukkan password" required>
+                                    <button type="button" class="password-toggle" id="toggle-user-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-options">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="remember-user">
+                                    <span>Ingat saya</span>
+                                </label>
+                                <a href="#" class="forgot-password">Lupa password?</a>
+                            </div>
+                            
+                            <button type="submit" class="btn-login">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>Login</span>
+                            </button>
+                            
+                            <div class="login-footer">
+                                <p>Belum punya akun? <a href="#" id="register-now">Daftar sekarang</a></p>
+                                <p>Atau login dengan:</p>
+                                <div class="social-login">
+                                    <button type="button" class="social-btn google">
+                                        <i class="fab fa-google"></i>
+                                        <span>Google</span>
+                                    </button>
+                                    <button type="button" class="social-btn microsoft">
+                                        <i class="fab fa-microsoft"></i>
+                                        <span>Microsoft</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== KETIGA: HALAMAN LOGIN ADMIN ========== -->
+    <div id="admin-login-page" class="page">
+        <div class="admin-login-container">
+            <!-- Back Button -->
+            <button class="back-btn" id="back-from-admin">
+                <i class="fas fa-arrow-left"></i>
+                <span>Kembali ke Pilihan</span>
+            </button>
+
+            <div class="admin-login-wrapper">
+                <!-- Left Panel - Info -->
+                <div class="admin-login-left">
+                    <div class="admin-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h2>EduLearn <span class="admin-badge">Admin</span></h2>
+                    </div>
+                    
+                    <div class="admin-features">
+                        <div class="admin-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-users-cog"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Manajemen Pengguna</h4>
+                                <p>Kelola semua user dan peran</p>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-book-medical"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Kontrol Konten</h4>
+                                <p>Upload dan kelola materi pembelajaran</p>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Analytics & Reports</h4>
+                                <p>Pantau statistik sistem lengkap</p>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>System Settings</h4>
+                                <p>Konfigurasi platform EduLearn</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="admin-security">
+                        <h4><i class="fas fa-shield-alt"></i> Keamanan Admin</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Two-factor authentication</li>
+                            <li><i class="fas fa-check"></i> Activity logging</li>
+                            <li><i class="fas fa-check"></i> IP restriction</li>
+                            <li><i class="fas fa-check"></i> Session timeout</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Panel - Login Form -->
+                <div class="admin-login-right">
+                    <div class="login-form-container">
+                        <div class="form-header">
+                            <h2>Login Administrator</h2>
+                            <p>Akses terbatas untuk staf admin terautentikasi</p>
+                            <div class="admin-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Area sensitif - Hanya untuk personel yang berwenang</span>
+                            </div>
+                        </div>
+                        
+                        <form id="admin-login-form">
+                            <div class="form-group">
+                                <label for="admin-email">
+                                    <i class="fas fa-id-badge"></i>
+                                    ID ADMIN / EMAIL
+                                </label>
+                                <input type="text" id="admin-email" class="form-field" 
+                                       placeholder="admin.id@edulearn.ac.id" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="admin-password">
+                                    <i class="fas fa-key"></i>
+                                    PASSWORD
+                                </label>
+                                <div class="password-container">
+                                    <input type="password" id="admin-password" class="form-field" 
+                                           placeholder="Masukkan password admin" required>
+                                    <button type="button" class="password-toggle" id="toggle-admin-password">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="admin-2fa">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    KODE 2FA (Opsional)
+                                </label>
+                                <input type="text" id="admin-2fa" class="form-field" 
+                                       placeholder="6-digit code dari authenticator app">
+                                <small class="form-help">Biarkan kosong jika tidak menggunakan 2FA</small>
+                            </div>
+                            
+                            <div class="form-options">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="remember-admin">
+                                    <span>Ingat perangkat ini (30 hari)</span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn-login admin">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Masuk sebagai Admin</span>
+                            </button>
+                            
+                            <div class="admin-login-footer">
+                                <p><i class="fas fa-info-circle"></i> Hubungi superadmin jika lupa kredensial</p>
+                                <p><i class="fas fa-history"></i> Sesi admin berakhir setelah 2 jam tidak aktif</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== KEEMPAT: DASHBOARD USER ========== -->
+    <div id="user-dashboard-page" class="page">
+        <!-- User Dashboard akan dimuat di sini -->
+        <div class="dashboard-placeholder">
+            <h2>User Dashboard</h2>
+            <p>Halaman dashboard user/mahasiswa</p>
+            <button class="btn-logout" id="logout-user">Logout</button>
+        </div>
+    </div>
+
+    <!-- ========== KELIMA: DASHBOARD ADMIN ========== -->
+    <div id="admin-dashboard-page" class="page">
+        <!-- Admin Dashboard akan dimuat di sini -->
+        <div class="dashboard-placeholder">
+            <h2>Admin Dashboard</h2>
+            <p>Halaman dashboard administrator</p>
+            <button class="btn-logout" id="logout-admin">Logout</button>
+        </div>
+    </div>
+
+    <!-- ========== NOTIFICATION CONTAINER ========== -->
+    <div id="notification-container"></div>
+
+    <!-- JavaScript -->
+    <script src="adminuser.js"></script>
+</body>
+</html>

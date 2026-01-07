@@ -1,0 +1,654 @@
+/* === VARIABLES & RESET === */
+:root {
+    /* Color Palette */
+    --primary-gradient: linear-gradient(180deg, #4A6FA5 0%, #6B93C5 100%);
+    --primary-gradient-hover: linear-gradient(180deg, #3a5a8c 0%, #5a7cad 100%);
+    --sidebar-bg: linear-gradient(180deg, #4A6FA5 0%, #6B93C5 100%);
+    --card-bg: #ffffff;
+    --body-bg: #f8fafc;
+    --text-primary: #2c3e50;
+    --text-secondary: #64748b;
+    --text-light: #ffffff;
+    --border-color: #f1f5f9;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+    
+    /* Course Colors */
+    --color-web: #3498db;
+    --color-database: #2ecc71;
+    --color-pancasila: #f39c12;
+    --color-pbo: #9b59b6;
+    --color-design: #e74c3c;
+    --color-ai: #1abc9c;
+    --color-story: #34495e;
+    
+    /* Timetable Colors */
+    --time-bg: #f8fafc;
+    --header-bg: #4A6FA5;
+    --current-day: #fff8e1;
+    
+    /* Spacing */
+    --sidebar-width: 250px;
+    --border-radius: 16px;
+    --card-padding: 28px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--body-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* === LAYOUT STRUCTURE === */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* === SIDEBAR - SAMA DENGAN HALAMAN LAIN === */
+.sidebar {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    color: var(--text-light);
+    padding: 20px 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.sidebar-header {
+    padding: 0 20px 25px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.sidebar-header h1 {
+    font-size: 26px;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-nav {
+    list-style: none;
+}
+
+.sidebar-nav li {
+    padding: 14px 20px;
+    transition: all 0.3s ease;
+    margin: 5px 10px;
+    border-radius: 12px;
+}
+
+.sidebar-nav li:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.sidebar-nav li.active {
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.sidebar-nav li.active::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background-color: var(--text-light);
+    border-radius: 0 4px 4px 0;
+}
+
+.sidebar-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+/* === MAIN CONTENT AREA === */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    background-color: var(--body-bg);
+    overflow-x: auto;
+}
+
+/* === TIMETABLE HEADER === */
+.timetable-header {
+    margin-bottom: 35px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.timetable-header h1 {
+    font-size: 32px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.timetable-header p {
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+/* === TIMETABLE CONTROL === */
+.timetable-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.week-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.week-nav button {
+    padding: 10px 20px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.week-nav button:hover {
+    background: var(--primary-gradient-hover);
+    transform: translateY(-2px);
+}
+
+.current-week {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--body-bg);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.semester-info {
+    text-align: right;
+}
+
+.semester-info h4 {
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.semester-info p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* === TIMETABLE CONTAINER === */
+.timetable-container {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+/* === TIMETABLE GRID === */
+.timetable-grid {
+    display: grid;
+    grid-template-columns: 120px repeat(5, 1fr);
+    width: 100%;
+}
+
+/* === TIMETABLE HEADERS === */
+.timetable-header-cell {
+    background: var(--header-bg);
+    color: white;
+    padding: 20px 15px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timetable-header-cell:first-child {
+    border-right: none;
+}
+
+.timetable-header-cell.current-day {
+    background: var(--current-day);
+    color: var(--text-primary);
+    position: relative;
+}
+
+.timetable-header-cell.current-day::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-ai);
+    border-radius: 50%;
+}
+
+/* === TIME SLOTS === */
+.time-slot {
+    background-color: var(--time-bg);
+    padding: 20px 15px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-slot span {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+/* === CLASS CARDS === */
+.class-card {
+    padding: 20px 15px;
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.class-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.class-card.empty {
+    background-color: var(--body-bg);
+}
+
+/* === CLASS CARD CONTENT === */
+.class-content {
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.class-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.class-content h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.class-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.class-room {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* === COURSE COLORS === */
+.class-content.web {
+    background: linear-gradient(135deg, var(--color-web) 0%, #5dade2 100%);
+}
+
+.class-content.database {
+    background: linear-gradient(135deg, var(--color-database) 0%, #82e0aa 100%);
+}
+
+.class-content.pancasila {
+    background: linear-gradient(135deg, var(--color-pancasila) 0%, #f7dc6f 100%);
+}
+
+.class-content.pbo {
+    background: linear-gradient(135deg, var(--color-pbo) 0%, #bb8fce 100%);
+}
+
+.class-content.design {
+    background: linear-gradient(135deg, var(--color-design) 0%, #f1948a 100%);
+}
+
+.class-content.ai {
+    background: linear-gradient(135deg, var(--color-ai) 0%, #76d7c4 100%);
+}
+
+.class-content.story {
+    background: linear-gradient(135deg, var(--color-story) 0%, #5d6d7e 100%);
+}
+
+/* === CURRENT CLASS INDICATOR === */
+.current-class {
+    position: relative;
+    border: 3px solid var(--color-ai);
+}
+
+.current-class::after {
+    content: 'SEDANG BERLANGSUNG';
+    position: absolute;
+    top: -12px;
+    right: -3px;
+    background-color: var(--color-ai);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 4px;
+    z-index: 3;
+}
+
+/* === DAY LEGEND === */
+.day-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.legend-color.web { background-color: var(--color-web); }
+.legend-color.database { background-color: var(--color-database); }
+.legend-color.pancasila { background-color: var(--color-pancasila); }
+.legend-color.pbo { background-color: var(--color-pbo); }
+.legend-color.design { background-color: var(--color-design); }
+.legend-color.ai { background-color: var(--color-ai); }
+.legend-color.story { background-color: var(--color-story); }
+
+/* === TODAY'S SCHEDULE === */
+.today-schedule {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--shadow);
+}
+
+.today-schedule h3 {
+    font-size: 20px;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.today-schedule h3::before {
+    content: '📅';
+    font-size: 24px;
+}
+
+.today-classes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.today-class {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--body-bg);
+    border-radius: 12px;
+    border-left: 4px solid;
+}
+
+.today-class.web { border-left-color: var(--color-web); }
+.today-class.database { border-left-color: var(--color-database); }
+.today-class.pancasila { border-left-color: var(--color-pancasila); }
+
+.class-time {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 80px;
+    font-size: 14px;
+}
+
+.class-details {
+    flex: 1;
+    padding-left: 15px;
+}
+
+.class-details h4 {
+    font-size: 16px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.class-details p {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.class-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: var(--color-ai);
+    color: white;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1200px) {
+    .timetable-grid {
+        grid-template-columns: 100px repeat(5, 1fr);
+    }
+    
+    .timetable-header-cell {
+        padding: 15px 10px;
+        font-size: 14px;
+    }
+    
+    .time-slot {
+        padding: 15px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-radius: 0 0 20px 20px;
+        position: relative;
+    }
+    
+    .main-content {
+        padding: 25px 15px;
+    }
+    
+    .timetable-controls {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .week-nav {
+        justify-content: center;
+    }
+    
+    .semester-info {
+        text-align: center;
+    }
+    
+    .timetable-grid {
+        grid-template-columns: 80px repeat(5, 1fr);
+        font-size: 12px;
+    }
+    
+    .class-content h4 {
+        font-size: 12px;
+    }
+    
+    .class-meta {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 576px) {
+    .timetable-grid {
+        display: block;
+    }
+    
+    .timetable-header-cell,
+    .time-slot,
+    .class-card {
+        display: none;
+    }
+    
+    .mobile-schedule {
+        display: block;
+    }
+    
+    .day-schedule {
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow);
+    }
+    
+    .day-schedule h4 {
+        color: var(--text-primary);
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--border-color);
+    }
+    
+    .mobile-class {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: var(--body-bg);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border-left: 4px solid;
+    }
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.class-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.class-card:nth-child(1) { animation-delay: 0.1s; }
+.class-card:nth-child(2) { animation-delay: 0.2s; }
+.class-card:nth-child(3) { animation-delay: 0.3s; }
+.class-card:nth-child(4) { animation-delay: 0.4s; }
+.class-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(26, 188, 156, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(26, 188, 156, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(26, 188, 156, 0); }
+}
+
+.current-class {
+    animation: pulse 2s infinite;
+}

@@ -36,8 +36,7 @@ $current_semester = 4;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - EduLearn</title>
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/profile.css">
+    <link rel="stylesheet" href="../assets/css/student-style.css">
 </head>
 <body>
 <div class="container">
@@ -133,13 +132,60 @@ $current_semester = 4;
 
                 <div class="profile-card">
                     <h3>Security</h3>
-                    <div class="security-note">
-                        <h4>⚠️ Fitur Sedang Dikembangkan</h4>
-                        <p>Fitur keamanan akan dikembangkan pada tahap selanjutnya. Terima kasih atas pengertiannya.</p>
-                    </div>
-                    <div style="margin-top: 20px;">
-                        <button class="btn btn-outline" disabled>Ganti Password</button>
-                    </div>
+                    <form method="POST" action="change_password.php" onsubmit="return confirmPasswordChange()">
+                        <input type="hidden" name="change_password" value="1">
+                        
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label for="old_password" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">Password Lama</label>
+                            <input 
+                                type="password" 
+                                id="old_password" 
+                                name="old_password" 
+                                required
+                                style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; transition: border-color 0.3s;"
+                                onfocus="this.style.borderColor='#4A6FA5'"
+                                onblur="this.style.borderColor='#e2e8f0'"
+                            >
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label for="new_password" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">Password Baru</label>
+                            <input 
+                                type="password" 
+                                id="new_password" 
+                                name="new_password" 
+                                required
+                                minlength="6"
+                                style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; transition: border-color 0.3s;"
+                                onfocus="this.style.borderColor='#4A6FA5'"
+                                onblur="this.style.borderColor='#e2e8f0'"
+                            >
+                            <small style="color: #64748b; font-size: 12px;">Minimal 6 karakter</small>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label for="confirm_password" style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">Konfirmasi Password Baru</label>
+                            <input 
+                                type="password" 
+                                id="confirm_password" 
+                                name="confirm_password" 
+                                required
+                                style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; transition: border-color 0.3s;"
+                                onfocus="this.style.borderColor='#4A6FA5'"
+                                onblur="this.style.borderColor='#e2e8f0'"
+                            >
+                        </div>
+                        
+                        <button 
+                            type="submit" 
+                            class="btn-primary"
+                            style="background: linear-gradient(135deg, #4A6FA5 0%, #6B93C5 100%); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(74, 111, 165, 0.3)'"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'"
+                        >
+                            🔒 Ganti Password
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -166,5 +212,24 @@ $current_semester = 4;
     border-left: 4px solid #f39c12;
 }
 </style>
+
+<script>
+function confirmPasswordChange() {
+    const newPassword = document.getElementById('new_password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    
+    if (newPassword !== confirmPassword) {
+        alert('Password baru dan konfirmasi tidak cocok!');
+        return false;
+    }
+    
+    if (newPassword.length < 6) {
+        alert('Password baru minimal 6 karakter!');
+        return false;
+    }
+    
+    return confirm('Apakah Anda yakin ingin mengubah password?');
+}
+</script>
 </body>
 </html>

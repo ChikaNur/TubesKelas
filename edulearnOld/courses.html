@@ -1,0 +1,360 @@
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>EduLearn</h1>
+            <link rel="stylesheet" href="couses.css">
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li class="active"><a href="#">Courses</a></li>
+            <li><a href="timetable.html">Timetable</a></li>
+            <li><a href="Asignment.html">Assignment</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Courses Header -->
+        <div class="courses-header">
+            <h1>My Courses</h1>
+            <p>Kelola dan pantau perkembangan mata kuliah</p>
+        </div>
+
+        <!-- Courses Filter -->
+        <div class="courses-filter">
+            <div class="filter-controls">
+                <button class="filter-btn active">Semua Mata Kuliah</button>
+                <button class="filter-btn">Aktif</button>
+                <button class="filter-btn">Selesai</button>
+                <button class="filter-btn">Favorit</button>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Cari mata kuliah...">
+            </div>
+        </div>
+
+        <!-- Semester Tabs -->
+        <div class="semester-tabs">
+            <button class="semester-tab active">Semua Semester</button>
+            <button class="semester-tab">Semester 3</button>
+            <button class="semester-tab">Semester 3</button>
+            <button class="semester-tab">Semester 3</button>
+        </div>
+
+        <!-- Course Stats -->
+        <div class="course-stats">
+            <h3>Ringkasan Perkuliahan</h3>
+            <div class="stats-grid">
+                <div class="stat-item all">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Total Mata Kuliah</div>
+                </div>
+                <div class="stat-item active">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Sedang Berjalan</div>
+                </div>
+                <div class="stat-item completed">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Telah Selesai</div>
+                </div>
+                <div class="stat-item upcoming">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Tugas Mendatang</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Grid -->
+        <div class="courses-grid">
+            <!-- Course 1: Pemrograman Web -->
+            <div class="course-card">
+                <div class="course-header web">
+                    <div class="course-code">WEB</div>
+                    <div class="course-status">Aktif</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Pemrograman Web</h3>
+                    <div class="course-info">
+                        <div class="course-info-item dosen">
+                            Dosen: Pak Andi
+                        </div>
+                        <div class="course-info-item semester">
+                            Semester: 3
+                        </div>
+                        <div class="course-info-item credits">
+                            SKS: 3
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress Pembelajaran</span>
+                            <span class="progress-value high">72%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill high" style="width: 72%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="action-btn primary">
+                            📖 View Course
+                        </button>
+                        <button class="action-btn secondary">
+                            📅 Jadwal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 2: Basis Data -->
+            <div class="course-card">
+                <div class="course-header database">
+                    <div class="course-code">BD</div>
+                    <div class="course-status">Aktif</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Basis Data</h3>
+                    <div class="course-info">
+                        <div class="course-info-item dosen">
+                            Dosen: Bu Rina
+                        </div>
+                        <div class="course-info-item semester">
+                            Semester: 3
+                        </div>
+                        <div class="course-info-item credits">
+                            SKS: 3
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress Pembelajaran</span>
+                            <span class="progress-value high">83%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill high" style="width: 83%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="action-btn primary">
+                            📖 View Course
+                        </button>
+                        <button class="action-btn secondary">
+                            📅 Jadwal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 3: UI/UX Design -->
+            <div class="course-card">
+                <div class="course-header design">
+                    <div class="course-code">UX</div>
+                    <div class="course-status">Aktif</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">UI/UX Design</h3>
+                    <div class="course-info">
+                        <div class="course-info-item dosen">
+                            Dosen: Pak Budi
+                        </div>
+                        <div class="course-info-item semester">
+                            Semester: 3
+                        </div>
+                        <div class="course-info-item credits">
+                            SKS: 2
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress Pembelajaran</span>
+                            <span class="progress-value medium">62%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill medium" style="width: 62%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="action-btn primary">
+                            📖 View Course
+                        </button>
+                        <button class="action-btn secondary">
+                            📅 Jadwal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 4: Pemrograman Berorientasi Objek -->
+            <div class="course-card">
+                <div class="course-header pbo">
+                    <div class="course-code">PBO</div>
+                    <div class="course-status">Aktif</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Pemrograman Berorientasi Objek</h3>
+                    <div class="course-info">
+                        <div class="course-info-item dosen">
+                            Dosen: Pak Dedi
+                        </div>
+                        <div class="course-info-item semester">
+                            Semester: 3
+                        </div>
+                        <div class="course-info-item credits">
+                            SKS: 4
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress Pembelajaran</span>
+                            <span class="progress-value high">79%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill high" style="width: 79%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="action-btn primary">
+                            📖 View Course
+                        </button>
+                        <button class="action-btn secondary">
+                            📅 Jadwal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 5: Kecerdasan Buatan -->
+            <div class="course-card">
+                <div class="course-header ai">
+                    <div class="course-code">AI</div>
+                    <div class="course-status">Aktif</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Kecerdasan Buatan</h3>
+                    <div class="course-info">
+                        <div class="course-info-item dosen">
+                            Dosen: Bu Maya
+                        </div>
+                        <div class="course-info-item semester">
+                            Semester: 3
+                        </div>
+                        <div class="course-info-item credits">
+                            SKS: 3
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress Pembelajaran</span>
+                            <span class="progress-value medium">65%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill medium" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="action-btn primary">
+                            📖 View Course
+                        </button>
+                        <button class="action-btn secondary">
+                            📅 Jadwal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 6: Teknik Penceritaan Digital -->
+            <div class="course-card">
+                <div class="course-header story">
+                    <div class="course-code">TPD</div>
+                    <div class="course-status">Aktif</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Teknik Penceritaan Digital</h3>
+                    <div class="course-info">
+                        <div class="course-info-item dosen">
+                            Dosen: Pak Arief
+                        </div>
+                        <div class="course-info-item semester">
+                            Semester: 3
+                        </div>
+                        <div class="course-info-item credits">
+                            SKS: 2
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress Pembelajaran</span>
+                            <span class="progress-value high">80%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill high" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="action-btn primary">
+                            📖 View Course
+                        </button>
+                        <button class="action-btn secondary">
+                            📅 Jadwal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 7: Pancasila -->
+            <div class="course-card">
+                <div class="course-header pancasila">
+                    <div class="course-code">PN</div>
+                    <div class="course-status">Selesai</div>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">Pancasila</h3>
+                    <div class="course-info">
+                        <div class="course-info-item dosen">
+                            Dosen: Bu Sari
+                        </div>
+                        <div class="course-info-item semester">
+                            Semester: 3
+                        </div>
+                        <div class="course-info-item credits">
+                            SKS: 2
+                        </div>
+                    </div>
+                    
+                    <div class="progress-section">
+                        <div class="progress-header">
+                            <span class="progress-label">Progress Pembelajaran</span>
+                            <span class="progress-value low">30%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill low" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="action-btn primary">
+                            📖 View Course
+                        </button>
+                        <button class="action-btn secondary">
+                            📝 Review
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

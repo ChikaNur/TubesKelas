@@ -9,9 +9,15 @@ if (!is_logged_in() || !is_admin()) {
 
 $db = getDB();
 
-// Get all assignments with submission statistics
-$stmt = $db->query("
-    SELECT 
+// Get filters
+$courseFilter = isset($_GET['course']) ? (int)$_GET['course'] : 0;
+$searchQuery = isset($_GET['search']) ? sanitize_input($_GET['search']) : '';
+$sortOrder = isset($_GET['sort']) && in_array($_GET['sort'], ['asc', 'desc']) ? $_GET['sort'] : 'desc';
+$dateFrom = isset($_GET['date_from']) ? sanitize_input($_GET['date_from']) : '';
+$dateTo = isset($_GET['date_to']) ? sanitize_input($_GET['date_to']) : '';
+
+// Build query
+$sql = "SELECT 
         t.*,
         mk.nama_mk,
         mk.kode_mk,
@@ -19,8 +25,33 @@ $stmt = $db->query("
         (SELECT COUNT(*) FROM submissions WHERE tugas_id = t.tugas_id) as total_submissions
     FROM tugas t
     INNER JOIN mata_kuliah mk ON t.mk_id = mk.mk_id
-    ORDER BY t.deadline DESC
-");
+    WHERE 1=1";
+$params = [];
+
+if ($courseFilter > 0) {
+    $sql .= " AND t.mk_id = ?";
+    $params[] = $courseFilter;
+}
+
+if ($searchQuery) {
+    $sql .= " AND t.judul LIKE ?";
+    $params[] = "%$searchQuery%";
+}
+
+if ($dateFrom) {
+    $sql .= " AND t.deadline >= ?";
+    $params[] = $dateFrom . ' 00:00:00';
+}
+
+if ($dateTo) {
+    $sql .= " AND t.deadline <= ?";
+    $params[] = $dateTo . ' 23:59:59';
+}
+
+$sql .= " ORDER BY t.deadline " . strtoupper($sortOrder);
+
+$stmt = $db->prepare($sql);
+$stmt->execute($params);
 $assignments = $stmt->fetchAll();
 
 // Get courses for dropdown
@@ -103,6 +134,64 @@ $total_submissions = array_sum(array_column($assignments, 'total_submissions'));
             </div>
         </div>
 
+        <!-- Filters -->
+        <div class="admin-search-filter">
+            <div class="search-box">
+                <form method="GET">
+                    <input type="text" name="search" placeholder="Search assignments by title..." value="<?= escape_html($searchQuery) ?>" class="admin-search-input">
+                </form>
+            </div>
+            <div class="filter-options">
+                <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                    <option value="">📚 All Courses</option>
+                    <?php foreach ($courses as $course): ?>
+                    <option value="<?= $course['mk_id'] ?>" <?= $courseFilter == $course['mk_id'] ? 'selected' : '' ?>>
+                        <?= escape_html($course['nama_mk']) ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+                
+                <input type="date" name="date_from" value="<?= escape_html($dateFrom) ?>" 
+                       class="admin-date-input" placeholder="From Date" 
+                       onchange="document.getElementById('filterForm').submit()">
+                       
+                <input type="date" name="date_to" value="<?= escape_html($dateTo) ?>" 
+                       class="admin-date-input" placeholder="To Date" 
+                       onchange="document.getElementById('filterForm').submit()">
+                
+                <select class="admin-filter-select" onchange="this.form.submit()" form="filterForm">
+                    <option value="desc" <?= $sortOrder === 'desc' ? 'selected' : '' ?>>⬇️ Newest First</option>
+                    <option value="asc" <?= $sortOrder === 'asc' ? 'selected' : '' ?>>⬆️ Oldest First</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Hidden form for filter submission -->
+        <form id="filterForm" method="GET" style="display: none;">
+            <input type="hidden" name="search" value="<?= escape_html($searchQuery) ?>">
+            <input type="hidden" name="course" value="<?= $courseFilter ?>">
+            <input type="hidden" name="date_from" value="<?= escape_html($dateFrom) ?>">
+            <input type="hidden" name="date_to" value="<?= escape_html($dateTo) ?>">
+            <input type="hidden" name="sort" value="<?= $sortOrder ?>">
+        </form>
+        
+        <script>
+        document.querySelectorAll('.admin-filter-select, .admin-date-input').forEach(el => {
+            el.addEventListener('change', function() {
+                const form = document.getElementById('filterForm');
+                const name = this.name;
+                let input = form.querySelector(`input[name="${name}"]`);
+                if (!input) {
+                    input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    form.appendChild(input);
+                }
+                input.value = this.value;
+            });
+        });
+        </script>
+
         <div class="admin-table-container">
             <table class="admin-table">
                 <thead>
@@ -145,7 +234,7 @@ $total_submissions = array_sum(array_column($assignments, 'total_submissions'));
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon" onclick="viewSubmissions(<?= $assignment['tugas_id'] ?>)" title="View Submissions">📝</button>
-                                <button class="btn-icon" onclick="editAssignment(<?= $assignment['tugas_id'] ?>)" title="Edit">✏️</button>
+                                <button class="btn-icon" onclick='editAssignment(<?= json_encode($assignment) ?>)' title="Edit">✏️</button>
                                 <button class="btn-icon" onclick="deleteAssignment(<?= $assignment['tugas_id'] ?>, '<?= escape_html($assignment['judul']) ?>')" style="color:#dc3545" title="Delete">🗑️</button>
                             </div>
                         </td>
@@ -197,9 +286,53 @@ $total_submissions = array_sum(array_column($assignments, 'total_submissions'));
     </div>
 </div>
 
+<!-- Edit Assignment Modal -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Edit Assignment</h2>
+        <form action="assignments_process.php" method="POST">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="tugas_id" id="edit_tugas_id">
+            <div class="form-group">
+                <label>Course *</label>
+                <select name="mk_id" id="edit_mk_id" class="form-control" required>
+                    <option value="">Select Course</option>
+                    <?php foreach ($courses as $course): ?>
+                    <option value="<?= $course['mk_id'] ?>"><?= escape_html($course['nama_mk']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Title *</label>
+                <input type="text" name="judul" id="edit_judul" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="deskripsi" id="edit_deskripsi" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Deadline *</label>
+                <input type="datetime-local" name="deadline" id="edit_deadline" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Max Score</label>
+                <input type="number" name="max_score" id="edit_max_score" class="form-control" value="100">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="submit" class="btn btn-primary" style="flex:1">Update Assignment</button>
+                <button type="button" class="btn btn-outline" onclick="closeModal()" style="flex:1">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
 function showAddModal() { document.getElementById('addModal').style.display = 'flex'; }
-function closeModal() { document.getElementById('addModal').style.display = 'none'; }
+function closeModal() { 
+    document.getElementById('addModal').style.display = 'none';
+    document.getElementById('editModal').style.display = 'none';
+}
 function deleteAssignment(id, title) {
     if (confirm('Delete assignment "' + title + '"?')) {
         window.location.href = 'assignments_process.php?action=delete&tugas_id=' + id;
@@ -207,6 +340,15 @@ function deleteAssignment(id, title) {
 }
 function viewSubmissions(id) {
     window.location.href = 'view_submissions.php?tugas_id=' + id;
+}
+function editAssignment(assignment) {
+    document.getElementById('editModal').style.display = 'flex';
+    document.getElementById('edit_tugas_id').value = assignment.tugas_id;
+    document.getElementById('edit_mk_id').value = assignment.mk_id;
+    document.getElementById('edit_judul').value = assignment.judul;
+    document.getElementById('edit_deskripsi').value = assignment.deskripsi || '';
+    document.getElementById('edit_deadline').value = assignment.deadline.replace(' ', 'T').substring(0, 16);
+    document.getElementById('edit_max_score').value = assignment.max_score;
 }
 </script>
 </body>
